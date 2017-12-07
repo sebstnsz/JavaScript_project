@@ -30,7 +30,7 @@ function GameFramework() {
         for (k = 0; k < tabBonhomme.length; k++) {
             if (nbsTractionTotal - tabBonhomme[k].getNbsTraction() > 0 || nbsTractionTotal === null) {
                 for (i = 0; i < tabAllObjet.length; i++) {
-                    tabAllObjet[i].draw(ctx);
+                    Avatar.draw(ctx);
                     tabAllObjet[i].update();
                 }
                 barre1.draw(ctx);
@@ -49,7 +49,6 @@ function GameFramework() {
         ctx.font = "10pt Calibri,Geneva,Arial";
         ctx.fillStyle = "rgb(0,20,180)";
         ctx.fillText("Nbs tactions", 0, 0);
-
         ctx.translate(30,30);
         ctx.font = "20pt Calibri,Geneva,Arial";
         ctx.fillStyle = "rgb(0,20,180)";
