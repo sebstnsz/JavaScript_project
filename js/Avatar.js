@@ -27,7 +27,6 @@ class Avatar{
 
             if(i<this.speed){
                 speedcircle = new SpeedCircle(x,y,scale,"rgb(255, 214, 68)");
-                // speedcircle = new SpeedCircle(x,y,scale,"rgb(68, 255, 161)");
             }else{
                 speedcircle = new SpeedCircle(x,y,scale,"rgb(51, 51, 51)");
             }

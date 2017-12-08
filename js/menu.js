@@ -9,19 +9,26 @@ let index_selected_avatar = 0;
 let onMax = false;
 let avs1,avs2;
 let fontsize = 30;
+let button1;
 
 
 function init(){
 
     canvas = document.querySelector("#myCanvas");
     ctx = canvas.getContext("2d");
+
     avatar1 = new Avatar(0,0,4,8,80,150);
     avatar2 = new Avatar(0,0,7,3,50,50);
 
+    avs1 = new AvatarSelector(30,110,20,20,1,"white");
+    avs2 = new AvatarSelector(canvas.width/2 - 40,110,20,20,1,"white");
 
+    let my_gradient=ctx.createLinearGradient(0,0,400,0);
+    my_gradient.addColorStop(0.10,"blue");
+    my_gradient.addColorStop(0.5,"rgb(155, 0, 62)");
+    my_gradient.addColorStop(0.90,"blue");
 
-        avs1 = new AvatarSelector(30,110,20,20,1,"white");
-        avs2 = new AvatarSelector(canvas.width/2 - 40,110,20,20,1,"white");
+    button1 = new PlayButton(0,430,1,my_gradient,"PLAY GAME",25,5);
 
 
     canvas.addEventListener('click', function(e){
@@ -46,16 +53,23 @@ function init(){
         let rect = canvas.getBoundingClientRect();
         let xmouse = e.clientX - rect.left;
         let ymouse = e.clientY - rect.top;
+        let wText = button1.getPosX()+button1.getWidth();
+
+        if( xmouse > button1.getPosX() && xmouse < wText && ymouse > button1.getY()-button1.getHeight() && ymouse < button1.getY()+button1.getHeight()/2){
+            if(button1.fontsize  < 26){
+            button1.fontsize += 2;
+            button1.blur +=5;
+            }
+        }else{
+            if(button1.fontsize  > 25){
 
 
-        if( xmouse > avs1.getX()*2 && xmouse < (avs1.getX()*2+20) && ymouse > avs1.getY()*2 && ymouse < (avs1.getY()*2+20)){
-            console.log("over");
-            if(fontsize < 35) {
-                fontsize += 1;
+                button1.fontsize -= 2;
+                button1.blur -=5;
             }
         }
-
     });
+
 
 
     avatar_array.push(avatar1);
@@ -98,7 +112,8 @@ function Animation(){
 
     selected_avatar = avatar_array[index_selected_avatar];
     drawTitle(blur);
-    drawPlay(0,430,blur);
+    button1.setBlur(blur);
+    button1.draw(ctx);
     avs1.draw(ctx);
     avs2.draw(ctx);
     selected_avatar.drawStat(ctx);
@@ -108,12 +123,6 @@ function Animation(){
 
     // 4 - On rapelle 60 fois par seconde la fonction
     requestAnimationFrame(Animation);
-}
-
-function playButtonOver(scale){
-ctx.save();
-ctx.scale(scale,scale);
-ctx.restore();
 }
 
 
@@ -150,29 +159,6 @@ function drawTitle(blursize){
 }
 
 
-function drawPlay(x,y,blur){
-    let txt = "PLAY GAME";
 
-    let my_gradient=ctx.createLinearGradient(0,0,400,0);
-    my_gradient.addColorStop(0.10,"blue");
-    my_gradient.addColorStop(0.5,"rgb(155, 0, 62)");
-    my_gradient.addColorStop(0.90,"blue");
-    ctx.save();
-
-    //ctx.font = "40px Retro Stereo Wide";
-    ctx.font = fontsize + "px True Lies";
-    ctx.strokeStyle = "red";
-    ctx.translate(x,y);
-    ctx.strokeText(txt,canvas.width/2 - ctx.measureText(txt).width/2,0);
-
-    ctx.shadowColor = "red";
-    ctx.shadowOffsetX = 0;
-    ctx.shadowOffsetY = 0;
-    ctx.shadowBlur = blur;
-    ctx.fillStyle = my_gradient;
-    ctx.fillText(txt,canvas.width/2 - ctx.measureText(txt).width/2,0);
-
-    ctx.restore();
-}
 
 

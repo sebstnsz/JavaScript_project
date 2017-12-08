@@ -1,6 +1,27 @@
 ﻿@font-face {
     font-family:"Retro Stereo Wide";
-    src: url('http://www.miketaylr.com/f/kulminoituva.ttf');
+    src:url("../font/Retro_Stereo_Wide.eot") format("eot"),
+    url("../font/Retro_Stereo_Wide.woff") format("woff"),
+    url("../font/Retro_Stereo_Wide.ttf") format("truetype"),
+    url("../font/Retro_Stereo_Wide.svg#RetroStereoWide") format("svg");
     font-weight:normal;
     font-style:normal;
 }
+
+@font-face {
+    font-family:"Monoton";
+    src:url("../font/Monoton-Regular.eot?") format("eot"),
+    url("../font/Monoton-Regular.woff") format("woff"),
+    url("../font/Monoton-Regular.ttf") format("truetype"),
+    url("../font/Monoton-Regular.svg#Monoton-Regular") format("svg");
+    font-weight:normal;
+    font-style:normal;
+}
+
+@font-face {
+    font-family:"True Lies";
+    src: url("../font/TrueLies.ttf") format("truetype");
+    font-weight:normal;
+    font-style:normal;
+}
+
