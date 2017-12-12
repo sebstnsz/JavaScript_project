@@ -11,3 +11,17 @@ Space game (1.0.0):
 - Bonus de vie et bonus de munition, changement d'arme (degats)
 
 
+Objet Class : 
+position x, position y, life, speed, longueur, largeur, arme(amelioration), bouclier(amelioration), image
+
+draw()
+move()
+
+
+Fusée
+Boss 
+
+Obstacle
+
+
+

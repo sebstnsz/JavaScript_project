@@ -8,7 +8,6 @@ let blur = 5;
 let index_selected_avatar = 0;
 let onMax = false;
 let avs1,avs2;
-let fontsize = 30;
 let button1;
 
 
@@ -17,16 +16,20 @@ function init(){
     canvas = document.querySelector("#myCanvas");
     ctx = canvas.getContext("2d");
 
-    avatar1 = new Avatar(0,0,4,8,80,150);
-    avatar2 = new Avatar(0,0,7,3,50,50);
-
-    avs1 = new AvatarSelector(30,110,20,20,1,"white");
-    avs2 = new AvatarSelector(canvas.width/2 - 40,110,20,20,1,"white");
+    avatar1 = new Objet(0,0,4,8,80,150);
+    avatar2 = new Objet(0,0,7,3,50,50);
+    avs1 = new AvatarSelector(40,110,20,20,1,"white",document.getElementById("back"));
+    avs2 = new AvatarSelector(canvas.width/2-50,110,20,20,1,"white",document.getElementById("next"));
 
     let my_gradient=ctx.createLinearGradient(0,0,400,0);
     my_gradient.addColorStop(0.10,"blue");
     my_gradient.addColorStop(0.5,"rgb(155, 0, 62)");
     my_gradient.addColorStop(0.90,"blue");
+
+    let my_gradient2=ctx.createLinearGradient(0,0,400,0);
+    my_gradient2.addColorStop(0.3,"rgb(27, 1, 145)");
+    my_gradient2.addColorStop(0.5,"rgb(216, 21, 21)");
+    my_gradient2.addColorStop(0.75,"rgb(27, 1, 145)");
 
     button1 = new PlayButton(0,430,1,my_gradient,"PLAY GAME",25,5);
 
@@ -48,6 +51,25 @@ function init(){
         }
     });
 
+    canvas.addEventListener('mousemove', function(e){
+        let rect = canvas.getBoundingClientRect();
+        let xmouse = e.clientX - rect.left;
+        let ymouse = e.clientY - rect.top;
+
+        if( xmouse > avs1.getX()*2 && xmouse < (avs1.getX()*2+20) && ymouse > avs1.getY()*2 && ymouse < (avs1.getY()*2+20)){
+            avs1.setSize(25);
+        }else{
+            avs1.setSize(20);
+        }
+
+        if( xmouse > avs2.getX()*2 && xmouse < (avs2.getX()*2+20) && ymouse > avs2.getY()*2 && ymouse < (avs2.getY()*2+20)){
+            avs2.setSize(25);
+        }else{
+            avs2.setSize(20);
+        }
+    });
+
+
 
     canvas.addEventListener('mousemove', function(e){
         let rect = canvas.getBoundingClientRect();
@@ -59,13 +81,13 @@ function init(){
             if(button1.fontsize  < 26){
             button1.fontsize += 2;
             button1.blur +=5;
+            button1.color = my_gradient2;
             }
         }else{
             if(button1.fontsize  > 25){
-
-
                 button1.fontsize -= 2;
                 button1.blur -=5;
+                button1.color = my_gradient;
             }
         }
     });

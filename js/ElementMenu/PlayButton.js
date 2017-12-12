@@ -26,7 +26,6 @@ class PlayButton extends ElementMenu{
     setBlur(blur){
         this.blur = blur;
     }
-
     draw(ctx){
         ctx.save();
 

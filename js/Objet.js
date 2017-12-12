@@ -1,4 +1,4 @@
-class Avatar{
+class Objet{
 
     constructor(x,y,life,speed,long,larg){
         this.x = x;
