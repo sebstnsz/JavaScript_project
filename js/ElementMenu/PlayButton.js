@@ -34,20 +34,15 @@ class PlayButton extends ElementMenu{
         ctx.translate(this.x,this.y);
         this.width = ctx.measureText(this.txt).width;
         this.height = this.fontsize;
-        ctx.strokeText(this.txt,canvas.width/2 - ctx.measureText(this.txt).width/2,0);
+        ctx.strokeText(this.txt,ctx.canvas.width/2 - ctx.measureText(this.txt).width/2,0);
 
         ctx.shadowColor = "red";
         ctx.shadowOffsetX = 0;
         ctx.shadowOffsetY = 0;
         ctx.shadowBlur = this.blur;
         ctx.fillStyle = this.color;
-        ctx.fillText(this.txt,canvas.width/2 - ctx.measureText(this.txt).width/2,0);
-        this.posx =canvas.width/2 - ctx.measureText(this.txt).width/2;
+        ctx.fillText(this.txt,ctx.canvas.width/2 - ctx.measureText(this.txt).width/2,0);
+        this.posx =ctx.canvas.width/2 - ctx.measureText(this.txt).width/2;
         ctx.restore();
     }
 }
-
-/*
-function drawPlay(x,y,blur){
-
-}*/
