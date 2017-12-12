@@ -31,8 +31,8 @@ function Menu() {
         canvas = document.querySelector("#myCanvas");
         ctx = canvas.getContext("2d");
 
-        avatar1 = new Objet(document.getElementById("space1"), 0, 0, 4, 8, 125, 125);
-        avatar2 = new Objet(document.getElementById("space2"), 0, 0, 7, 3, 125, 125);
+        avatar1 = new Player(document.getElementById("space1"), 0, 0, 4, 8, 125, 125);
+        avatar2 = new Player(document.getElementById("space2"), 0, 0, 7, 3, 125, 125);
         avs1 = new AvatarSelector(40, 110, 20, 20, 1, "white", document.getElementById("back"));
         avs2 = new AvatarSelector(canvas.width / 2 - 50, 110, 20, 20, 1, "white", document.getElementById("next"));
 
@@ -168,8 +168,8 @@ function Menu() {
         button1.draw(ctx);
         avs1.draw(ctx);
         avs2.draw(ctx);
-        selected_avatar.drawStat(ctx);
-        selected_avatar.draw(ctx);
+        selected_avatar.drawStatInMenu(ctx);
+        selected_avatar.drawInMenu(ctx);
 
         // 3 - on met à jour les objets à dessiner
 

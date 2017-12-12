@@ -1,16 +1,9 @@
-class Objet{
-
+class Player extends Objet{
     constructor(img,x,y,life,speed,long,larg){
-        this.image = img;
-        this.x = x;
-        this.y = y;
-        this.life = life; // 0 to 10
-        this.speed = speed; // 0 to 10
-        this.long = long;
-        this.larg = larg;
+       super(img,x,y,life,speed,long,larg);
     }
 
-    drawStat(ctx){
+    drawStatInMenu(ctx){
         let heart;
         let speedcircle;
         let xmove =15;
@@ -43,13 +36,11 @@ class Objet{
         ctx.restore();
     }
 
-    draw(ctx){
+    drawInMenu(ctx){
         ctx.save();
         ctx.translate(ctx.canvas.width/2 - this.long/2,ctx.canvas.height/2 - this.larg/2 - 20 );
         ctx.drawImage(this.image,0,0,this.larg,this.long);
         ctx.restore();
     }
+
 }
-
-
-
