@@ -1,6 +1,7 @@
 class Objet{
 
-    constructor(x,y,life,speed,long,larg){
+    constructor(img,x,y,life,speed,long,larg){
+        this.image = img;
         this.x = x;
         this.y = y;
         this.life = life; // 0 to 10
@@ -13,7 +14,7 @@ class Objet{
         let heart;
         let speedcircle;
         let xmove =15;
-        let x = (canvas.width - 10 * xmove)/2;
+        let x = (ctx.canvas.width - 10 * xmove)/2;
         let y = 340;
         let scale = 0.12;
 
@@ -44,10 +45,10 @@ class Objet{
 
     draw(ctx){
         ctx.save();
-        ctx.translate(canvas.width/2 - this.long/2,canvas.height/2 - this.larg/2 - 20 );
-        ctx.fillStyle = "white";
-        ctx.fillRect(0,0,this.long,this.larg);
-
+        ctx.translate(ctx.canvas.width/2 - this.long/2,ctx.canvas.height/2 - this.larg/2 - 20 );
+        //ctx.fillStyle = "white";
+        //ctx.fillRect(0,0,this.long,this.larg);
+        ctx.drawImage(this.image,0,0,this.larg,this.long);
         ctx.restore();
     }
 }
