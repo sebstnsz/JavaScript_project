@@ -1,11 +1,13 @@
 window.onload = init;
 
 var menu;
+var game;
 
 function init(){
-    menu = new Menu();
-
-    menu.init();
+    //menu = new Menu();
+    //menu.init();
+     game = new Game( new Player(document.getElementById("space1"), 0, 0, 4, 8, 125, 125));
+    game.init();
 }
 
 function Menu() {
@@ -116,13 +118,8 @@ function Menu() {
                console.log("play game !!!");
                ctx = null;
 
-                GameEngine = new GameEngine();
-                GameEngine.init();
-
             }
         });
-
-
 
         avatar_array.push(avatar1);
         avatar_array.push(avatar2);
@@ -134,7 +131,7 @@ function Menu() {
     function Animation() {
         // 1 - on efface le canvas
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+        console.log("test");
         // 2 - on dessine dans le canvas
         /////BLUR FLICKER//////
         if (blur <= 25 && onMax === false) {
