@@ -1,11 +1,12 @@
 window.onload = init;
 
 var menu;
+var game;
 
 function init(){
     menu = new Menu();
-
     menu.init();
+
 }
 
 function Menu() {
@@ -24,15 +25,13 @@ function Menu() {
     let avs1, avs2;
     let button1;
 
-    let GameEngine;
-
 
     function init() {
         canvas = document.querySelector("#myCanvas");
         ctx = canvas.getContext("2d");
 
-        avatar1 = new Player(document.getElementById("space1"), 0, 0, 4, 8, 125, 125);
-        avatar2 = new Player(document.getElementById("space2"), 0, 0, 7, 3, 125, 125);
+        avatar1 = new Player(document.getElementById("space1"), 0, 0, 4, 8, 125, 125,1);
+        avatar2 = new Player(document.getElementById("space2"), 0, 0, 7, 3, 125, 125,1);
         avs1 = new AvatarSelector(40, 110, 20, 20, 1, "white", document.getElementById("back"));
         avs2 = new AvatarSelector(canvas.width / 2 - 50, 110, 20, 20, 1, "white", document.getElementById("next"));
 
@@ -114,15 +113,14 @@ function Menu() {
 
             if (xmouse > button1.getPosX() && xmouse < wText && ymouse > button1.getY() - button1.getHeight() && ymouse < button1.getY() + button1.getHeight() / 2) {
                console.log("play game !!!");
-               ctx = null;
+              ctx = null;
 
-                GameEngine = new GameEngine();
-                GameEngine.init();
+                game = new Game( new Player(document.getElementById("space1"), 0, 0, 4, 8, 125, 125));
+                game.init();
+
 
             }
         });
-
-
 
         avatar_array.push(avatar1);
         avatar_array.push(avatar2);
@@ -134,7 +132,6 @@ function Menu() {
     function Animation() {
         // 1 - on efface le canvas
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-
         // 2 - on dessine dans le canvas
         /////BLUR FLICKER//////
         if (blur <= 25 && onMax === false) {

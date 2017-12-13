@@ -1,7 +1,14 @@
 class Player extends Objet{
-    constructor(img,x,y,life,speed,long,larg){
-       super(img,x,y,life,speed,long,larg);
+    constructor(img,x,y,life,speed,long,larg,s){
+       super(img,x,y,life,speed,long,larg,s);
     }
+/*
+    0 = up
+    1 = down
+
+    0 = left
+    1 = right
+  */
 
     drawStatInMenu(ctx){
         let heart;
