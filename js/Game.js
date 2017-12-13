@@ -22,14 +22,6 @@ class Game{
           39 : right
           40 : down
           32 : space
-
-
-          0 = up
-          1 = down
-
-          0 = left
-          1 = right
-
            */
         window.addEventListener('keydown', function(event) {
             if (event.keyCode === 37) {
@@ -71,18 +63,29 @@ class Game{
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         // Checks inputStates
         if (inputStates.left) {
-                player.moveX(1);
+           if(player.x > 0){
+               player.moveX(1);
+           }
+
 
         }
         if (inputStates.right) {
-            player.moveX(0);
+            if(player.x < canvas.width+player.larg/1.5){;
+                player.moveX(0);
+            }
         }
 
         if(inputStates.up){
-            player.moveY(0);
+            if(player.y >10){
+                player.moveY(0);
+            }
+
         }
         if(inputStates.down){
-            player.moveY(1);
+            if(player.y < canvas.height+player.larg){
+                player.moveY(1);
+            }
+
         }
 
 
