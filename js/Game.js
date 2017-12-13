@@ -14,7 +14,7 @@ class Game{
         canvas = document.querySelector("#myCanvas");
         ctx = canvas.getContext("2d");
         player = this.player;
-        player.scale(0.5,0.5);
+        player.scale = 0.65;
         /*
           37 : left
           38 : up

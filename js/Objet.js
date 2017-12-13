@@ -12,6 +12,11 @@ class Objet{
         this.scale = s;
     }
 
+    setPosition(x,y){
+        this.x = x;
+        this.y = y;
+    }
+    
     moveX(status){
         if(status === 0){
             this.x = this.x + this.speed;
