@@ -115,7 +115,7 @@ function Menu() {
                console.log("play game !!!");
               ctx = null;
 
-                game = new Game( new Player(document.getElementById("space1"), 0, 0, 4, 8, 125, 125));
+                game = new Game(avatar_array[index_selected_avatar] );
                 game.init();
 
 
