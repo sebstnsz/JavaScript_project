@@ -15,6 +15,7 @@ class Game{
         ctx = canvas.getContext("2d");
         player = this.player;
         player.scale = 0.65;
+        player.setPosition(canvas.width/2+player.long/3,canvas.height+player.larg);
         /*
           37 : left
           38 : up
@@ -70,7 +71,8 @@ class Game{
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         // Checks inputStates
         if (inputStates.left) {
-            player.moveX(1);
+                player.moveX(1);
+
         }
         if (inputStates.right) {
             player.moveX(0);
@@ -84,21 +86,6 @@ class Game{
         }
 
 
-        if(inputStates.down && inputStates.left){
-
-        }
-
-        if(inputStates.down && inputStates.right){
-
-        }
-
-        if(inputStates.up && inputStates.left){
-
-        }
-
-        if(inputStates.up && inputStates.right){
-
-        }
 
 
         this.player.draw(ctx);
@@ -107,13 +94,6 @@ class Game{
 
     }
 
-    draw(){
-        ctx.save();
-        ctx.translate(10,10);
-        ctx.fillStyle = "white";
-        ctx.fillRect(0,0,100,100);
-        ctx.restore();
-    }
 
 
 }
