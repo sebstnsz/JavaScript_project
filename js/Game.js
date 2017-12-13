@@ -1,6 +1,8 @@
 let player;
 let canvas;
 let ctx;
+let inputStates =  {};
+
 class Game{
 
     constructor(p){
@@ -12,6 +14,7 @@ class Game{
         canvas = document.querySelector("#myCanvas");
         ctx = canvas.getContext("2d");
         player = this.player;
+        player.scale(0.5,0.5);
         /*
           37 : left
           38 : up
@@ -29,27 +32,32 @@ class Game{
            */
         window.addEventListener('keydown', function(event) {
             if (event.keyCode === 37) {
-
-                    player.moveX();
-
+                inputStates.left = true;
 
             }else if(event.keyCode === 38){
-                    player.moveY(0);
-                    console.log(player.y);
-
-
+                inputStates.up = true;
             }else if(event.keyCode === 39){
-
-                if(player.x > canvas.width){
-                    player.moveX();
-                }
-
+                inputStates.right = true;
             }else if(event.keyCode === 40){
-                    player.moveY(1);
-                    console.log(player.y);
-
+                inputStates.down = true;
             } else if (event.keyCode === 32) {
+                inputStates.space = true;
+            }
+        }, false);
 
+
+        window.addEventListener('keyup', function(event) {
+            if (event.keyCode === 37) {
+                inputStates.left = false;
+
+            }else if(event.keyCode === 38){
+                inputStates.up = false;
+            }else if(event.keyCode === 39){
+                inputStates.right = false;
+            }else if(event.keyCode === 40){
+                inputStates.down = false;
+            }else if (event.keyCode === 32) {
+                inputStates.space = false;
             }
         }, false);
 
@@ -60,7 +68,40 @@ class Game{
     Animation(){
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        this.draw();
+        // Checks inputStates
+        if (inputStates.left) {
+            player.moveX(1);
+        }
+        if (inputStates.right) {
+            player.moveX(0);
+        }
+
+        if(inputStates.up){
+            player.moveY(0);
+        }
+        if(inputStates.down){
+            player.moveY(1);
+        }
+
+
+        if(inputStates.down && inputStates.left){
+
+        }
+
+        if(inputStates.down && inputStates.right){
+
+        }
+
+        if(inputStates.up && inputStates.left){
+
+        }
+
+        if(inputStates.up && inputStates.right){
+
+        }
+
+
+        this.player.draw(ctx);
         requestAnimationFrame(()=> this.Animation());
 
 

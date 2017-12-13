@@ -1,6 +1,6 @@
 class Player extends Objet{
-    constructor(img,x,y,life,speed,long,larg){
-       super(img,x,y,life,speed,long,larg);
+    constructor(img,x,y,life,speed,long,larg,s){
+       super(img,x,y,life,speed,long,larg,s);
     }
 /*
     0 = up
@@ -9,22 +9,6 @@ class Player extends Objet{
     0 = left
     1 = right
   */
-    moveX(status){
-        if(status === 0){
-            this.x = this.x + this.speed;
-        }else{
-            this.x = this.x - this.speed;
-        }
-
-    }
-
-    moveY(status){
-        if(status === 0){
-            this.y = this.y + this.speed;
-        }else{
-            this.y = this.y - this.speed;
-        }
-    }
 
     drawStatInMenu(ctx){
         let heart;
