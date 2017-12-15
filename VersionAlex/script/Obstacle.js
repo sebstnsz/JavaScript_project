@@ -1,23 +1,17 @@
 class Obstacle extends Objet {
 	constructor(x,vx,vy,w,h,vie,img) {
 		super(x,-h,vx,vy,w,h,vie,img);
-		// x : constructeur
-		// y : -h
+		// x : défini dans création
+		// y : -h par défaut
 		// vx,vy,w,h,vie, image : défini dans fils
 	}
-
-	//dessiner(ctx)
-	//moveX()
-	//moveY()
-	//animer()
 
 	out(ctx) {
 		var w = ctx.canvas.width;
 		var h = ctx.canvas.height;
-		return (this.posY-this.hauteur/2 >= h) || (this.posX+this.largeur/2 <= 0) || (this.posX-this.largeur/2 >= w);
+		return (this.posY >= h) || (this.posX+this.largeur <= 0) || (this.posX >= w);
 	}
 }
-
 
 // dans classe suivantes, dessiner() est temporaire, il est défini dans la classe Objet
 
