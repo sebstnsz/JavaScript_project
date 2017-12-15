@@ -7,6 +7,7 @@ class Game{
 
     constructor(p){
         this.player = p;
+        this.time = new Chrono();
     }
 
     init(){
@@ -15,20 +16,13 @@ class Game{
         ctx = canvas.getContext("2d");
         player = this.player;
         player.scale = 0.65;
+        player.setPosition(canvas.width/2+player.long/3,canvas.height+player.larg);
         /*
           37 : left
           38 : up
           39 : right
           40 : down
           32 : space
-
-
-          0 = up
-          1 = down
-
-          0 = left
-          1 = right
-
            */
         window.addEventListener('keydown', function(event) {
             if (event.keyCode === 37) {
@@ -66,54 +60,89 @@ class Game{
 
     }
     Animation(){
-
+        this.time.increment();
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         // Checks inputStates
         if (inputStates.left) {
-            player.moveX(1);
+           if(player.x > 0){
+               player.moveX(1);
+           }
         }
         if (inputStates.right) {
-            player.moveX(0);
+            if(player.x < canvas.width+player.larg/1.5){;
+                player.moveX(0);
+            }
         }
 
         if(inputStates.up){
-            player.moveY(0);
+            if(player.y >10){
+                player.moveY(0);
+            }
+
         }
         if(inputStates.down){
-            player.moveY(1);
-        }
-
-
-        if(inputStates.down && inputStates.left){
-
-        }
-
-        if(inputStates.down && inputStates.right){
-
-        }
-
-        if(inputStates.up && inputStates.left){
-
-        }
-
-        if(inputStates.up && inputStates.right){
+            if(player.y < canvas.height+player.larg){
+                player.moveY(1);
+            }
 
         }
 
 
+        this.displayScore();
+        this.displayLife();
+       // this.displayTime();
+        this.displayNiveau();
         this.player.draw(ctx);
         requestAnimationFrame(()=> this.Animation());
 
 
     }
 
-    draw(){
+
+    displayScore(){
         ctx.save();
-        ctx.translate(10,10);
+        ctx.font = "20px Calibri";
         ctx.fillStyle = "white";
-        ctx.fillRect(0,0,100,100);
+        ctx.fillText("7892", 10,50);
         ctx.restore();
     }
+
+    displayTime(){
+        ctx.save();
+        ctx.font = "20px Calibri";
+        ctx.fillStyle = "white";
+        ctx.fillText("" + this.time.sec, 10,50);
+        ctx.restore();
+    }
+
+    displayNiveau(){
+        ctx.save();
+        ctx.font = "10px Calibri";
+        ctx.fillStyle = "white";
+        ctx.fillText("Niveau 1", 10,65);
+        ctx.restore();
+    }
+
+    displayLife(){
+        ctx.save();
+        let x = 5;
+        let y = 10;
+        let heart;
+        for(let i  = 0; i<10;i++){
+            if(i < player.life){
+                heart = new Heart(x,y,0.15,"rgb(237, 16, 53)");
+            }else{
+                heart = new Heart(x,y,0.15,"rgb(51, 51, 51)");
+            }
+
+            heart.draw(ctx);
+
+            x = x + 17.5;
+        }
+
+        ctx.restore();
+    }
+
 
 
 }

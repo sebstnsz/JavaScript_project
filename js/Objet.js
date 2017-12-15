@@ -16,7 +16,7 @@ class Objet{
         this.x = x;
         this.y = y;
     }
-    
+
     moveX(status){
         if(status === 0){
             this.x = this.x + this.speed;
@@ -36,9 +36,9 @@ class Objet{
 
     draw(ctx){
         ctx.save();
-        ctx.translate(this.x,this.y);
+       // ctx.translate(this.x,this.y);
         ctx.scale(this.scale,this.scale);
-        ctx.drawImage(this.image,0,0,this.larg,this.long);
+        ctx.drawImage(this.image,this.x,this.y,this.larg,this.long);
         ctx.restore();
 
     }
