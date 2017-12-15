@@ -7,6 +7,7 @@ class Game{
 
     constructor(p){
         this.player = p;
+        this.time = new Chrono();
     }
 
     init(){
@@ -59,7 +60,7 @@ class Game{
 
     }
     Animation(){
-
+        this.time.increment();
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         // Checks inputStates
         if (inputStates.left) {
@@ -89,7 +90,7 @@ class Game{
 
         this.displayScore();
         this.displayLife();
-        this.displayTime();
+       // this.displayTime();
         this.displayNiveau();
         this.player.draw(ctx);
         requestAnimationFrame(()=> this.Animation());
@@ -102,7 +103,7 @@ class Game{
         ctx.save();
         ctx.font = "20px Calibri";
         ctx.fillStyle = "white";
-        ctx.fillText("7892", 10,75);
+        ctx.fillText("7892", 10,50);
         ctx.restore();
     }
 
@@ -110,7 +111,7 @@ class Game{
         ctx.save();
         ctx.font = "20px Calibri";
         ctx.fillStyle = "white";
-        ctx.fillText("00:10", 10,50);
+        ctx.fillText("" + this.time.sec, 10,50);
         ctx.restore();
     }
 
@@ -118,7 +119,7 @@ class Game{
         ctx.save();
         ctx.font = "10px Calibri";
         ctx.fillStyle = "white";
-        ctx.fillText("Niveau 1", 10,87);
+        ctx.fillText("Niveau 1", 10,65);
         ctx.restore();
     }
 

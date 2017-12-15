@@ -5,6 +5,6 @@ class Chrono {
 	}
 	increment() {
 		this.tic++;
-		if(this.tic%60 == 0) this.sec++;
+		if(this.tic%60 === 0) this.sec++;
 	}
 }

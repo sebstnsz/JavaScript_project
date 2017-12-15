@@ -1,6 +1,7 @@
 class Player extends Objet{
     constructor(img,x,y,life,speed,long,larg,s){
        super(img,x,y,life,speed,long,larg,s);
+       this.score = 0;
     }
 /*
     0 = up
