@@ -66,8 +66,6 @@ class Game{
            if(player.x > 0){
                player.moveX(1);
            }
-
-
         }
         if (inputStates.right) {
             if(player.x < canvas.width+player.larg/1.5){;
@@ -89,12 +87,59 @@ class Game{
         }
 
 
-
-
+        this.displayScore();
+        this.displayLife();
+        this.displayTime();
+        this.displayNiveau();
         this.player.draw(ctx);
         requestAnimationFrame(()=> this.Animation());
 
 
+    }
+
+
+    displayScore(){
+        ctx.save();
+        ctx.font = "20px Calibri";
+        ctx.fillStyle = "white";
+        ctx.fillText("7892", 10,75);
+        ctx.restore();
+    }
+
+    displayTime(){
+        ctx.save();
+        ctx.font = "20px Calibri";
+        ctx.fillStyle = "white";
+        ctx.fillText("00:10", 10,50);
+        ctx.restore();
+    }
+
+    displayNiveau(){
+        ctx.save();
+        ctx.font = "10px Calibri";
+        ctx.fillStyle = "white";
+        ctx.fillText("Niveau 1", 10,87);
+        ctx.restore();
+    }
+
+    displayLife(){
+        ctx.save();
+        let x = 5;
+        let y = 10;
+        let heart;
+        for(let i  = 0; i<10;i++){
+            if(i < player.life){
+                heart = new Heart(x,y,0.15,"rgb(237, 16, 53)");
+            }else{
+                heart = new Heart(x,y,0.15,"rgb(51, 51, 51)");
+            }
+
+            heart.draw(ctx);
+
+            x = x + 17.5;
+        }
+
+        ctx.restore();
     }
 
 
