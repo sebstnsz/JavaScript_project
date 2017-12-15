@@ -23,6 +23,9 @@ class Objet {
 	moveX() { this.posX += this.vitesseX; }
 	moveY() { this.posY += this.vitesseY; }
 
+	changeDirX() { this.vitesseX = -this.vitesseX; }
+	changeDirY() { this.vitesseY = -this.vitesseY; }
+
 	animer() {
 		this.moveX();
 		this.moveY();
