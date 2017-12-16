@@ -61,28 +61,29 @@ class Game{
     }
     Animation(){
         this.time.increment();
+        player.score = this.time.sec * 87;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         // Checks inputStates
         if (inputStates.left) {
            if(player.x > 0){
-               player.moveX(1);
+               player.gauche();
            }
         }
         if (inputStates.right) {
             if(player.x < canvas.width+player.larg/1.5){;
-                player.moveX(0);
+               player.droite();
             }
         }
 
         if(inputStates.up){
             if(player.y >10){
-                player.moveY(0);
+                player.haut();
             }
 
         }
         if(inputStates.down){
             if(player.y < canvas.height+player.larg){
-                player.moveY(1);
+                player.bas();
             }
 
         }
@@ -103,7 +104,7 @@ class Game{
         ctx.save();
         ctx.font = "20px Calibri";
         ctx.fillStyle = "white";
-        ctx.fillText("7892", 10,50);
+        ctx.fillText(player.score, 10,50);
         ctx.restore();
     }
 

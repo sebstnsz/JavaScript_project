@@ -1,6 +1,6 @@
 class Player extends Objet{
     constructor(img,x,y,life,speed,long,larg,s){
-       super(img,x,y,life,speed,long,larg,s);
+       super(img,x,y,life,speed,speed,speed,long,larg,s);
        this.score = 0;
     }
 /*
@@ -10,6 +10,18 @@ class Player extends Objet{
     0 = left
     1 = right
   */
+    gauche(){
+        this.x = this.x - this.speed;
+    }
+    droite(){
+        this.x = this.x + this.speed;
+    }
+    haut(){
+        this.y = this.y - this.speed;
+    }
+    bas(){
+        this.y = this.y + this.speed;
+    }
 
     drawStatInMenu(ctx){
         let heart;
