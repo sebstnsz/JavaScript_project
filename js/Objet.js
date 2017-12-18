@@ -1,6 +1,6 @@
 class Objet{
 
-    constructor(img,x,y,life,vx,vy,speed,long,larg,s){
+    constructor(img,x,y,life,vx,vy,speed,long,larg){
         this.image = img;
         this.x = x;
         this.y = y;
@@ -10,7 +10,6 @@ class Objet{
         this.speed = speed; // 0 to 10
         this.long = long;
         this.larg = larg;
-        this.scale = s;
     }
 
     setPosition(x,y){
@@ -18,11 +17,8 @@ class Objet{
         this.y = y;
     }
 
-
     draw(ctx){
         ctx.save();
-       // ctx.translate(this.x,this.y);
-        ctx.scale(this.scale,this.scale);
         ctx.drawImage(this.image,this.x,this.y,this.larg,this.long);
         ctx.restore();
 

@@ -30,8 +30,8 @@ function Menu() {
         canvas = document.querySelector("#myCanvas");
         ctx = canvas.getContext("2d");
 
-        avatar1 = new Player(document.getElementById("space1"), 0, 0, 4, 8, 125, 125,1);
-        avatar2 = new Player(document.getElementById("space2"), 0, 0, 7, 3, 125, 125,1);
+        avatar1 = new Player(document.getElementById("space1"), 0, 0, 4, 8, 70, 70);
+        avatar2 = new Player(document.getElementById("space2"), 0, 0, 7, 3, 70, 70);
         avs1 = new AvatarSelector(40, 110, 20, 20, 1, "white", document.getElementById("back"));
         avs2 = new AvatarSelector(canvas.width / 2 - 50, 110, 20, 20, 1, "white", document.getElementById("next"));
 
@@ -113,10 +113,9 @@ function Menu() {
 
             if (xmouse > button1.getPosX() && xmouse < wText && ymouse > button1.getY() - button1.getHeight() && ymouse < button1.getY() + button1.getHeight() / 2) {
                console.log("play game !!!");
-              ctx = null;
-
-                game = new Game(avatar_array[index_selected_avatar] );
-                game.init();
+               ctx = null;
+               game = new Game(avatar_array[index_selected_avatar] );
+               game.init();
 
 
             }

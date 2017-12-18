@@ -2,6 +2,7 @@ class Player extends Objet{
     constructor(img,x,y,life,speed,long,larg,s){
        super(img,x,y,life,speed,speed,speed,long,larg,s);
        this.score = 0;
+       this.arme = new Arme(x,y,10,100,10,10,7.5);
     }
 /*
     0 = up
@@ -58,9 +59,29 @@ class Player extends Objet{
 
     drawInMenu(ctx){
         ctx.save();
-        ctx.translate(ctx.canvas.width/2 - this.long/2,ctx.canvas.height/2 - this.larg/2 - 20 );
+        ctx.translate(ctx.canvas.width/2 - this.long/2-17.5,ctx.canvas.height/2 - this.larg/2 - 30 );
+        ctx.scale(1.5,1.5);
         ctx.drawImage(this.image,0,0,this.larg,this.long);
         ctx.restore();
     }
+
+    drawStatArme(ctx){
+       this.arme.drawStat(ctx);
+    }
+
+
+    shoot(){
+
+        let px = (this.long-this.arme.taillebullet)/2;
+        let py = (this.larg-this.arme.taillebullet)/2;
+
+        if(this.arme.munition > this.arme.array_chargeur.length ){
+            this.arme.index++;
+            this.arme.array_chargeur.push(new Bullet(this.x+px,this.y+py,this.arme.taillebullet));
+        }
+    }
+
+
+
 
 }

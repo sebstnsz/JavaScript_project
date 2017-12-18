@@ -2,21 +2,23 @@ let player;
 let canvas;
 let ctx;
 let inputStates =  {};
+let estPress = false;
+
 
 class Game{
 
     constructor(p){
         this.player = p;
         this.time = new Chrono();
+        this.palierNiveau = [1000,2000,3000,4000,5000,6000,7000,8000,9000,10000];
+        this.niveauActuel = 0;
     }
 
     init(){
-        console.log("loadded");
         canvas = document.querySelector("#myCanvas");
         ctx = canvas.getContext("2d");
         player = this.player;
-        player.scale = 0.65;
-        player.setPosition(canvas.width/2+player.long/3,canvas.height+player.larg);
+        player.setPosition(canvas.width/2-player.larg/2,400);
         /*
           37 : left
           38 : up
@@ -55,13 +57,17 @@ class Game{
             }
         }, false);
 
-
         this.Animation();
 
     }
     Animation(){
+        for(let i = 0;i<this.palierNiveau.length;i++){
+            if(player.score >= this.palierNiveau[i]){
+                this.niveauActuel = i+1;
+            }
+        }
         this.time.increment();
-        player.score = this.time.sec * 87;
+        player.score = this.time.sec * 187;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         // Checks inputStates
         if (inputStates.left) {
@@ -69,8 +75,9 @@ class Game{
                player.gauche();
            }
         }
+
         if (inputStates.right) {
-            if(player.x < canvas.width+player.larg/1.5){;
+            if(player.x < canvas.width-player.larg){
                player.droite();
             }
         }
@@ -82,16 +89,40 @@ class Game{
 
         }
         if(inputStates.down){
-            if(player.y < canvas.height+player.larg){
+            if(player.y < canvas.height-player.larg){
                 player.bas();
             }
 
         }
 
 
+        window.addEventListener('keydown', function(event) {
+
+            if (event.keyCode === 32) {
+                estPress = true;
+            }
+        }, false);
+
+
+        if(estPress === true){
+            estPress = false;
+            player.shoot();
+
+        }
+
+
+        //Boucle For()
+        if(player.arme.array_chargeur.length !== 0) {
+            for (let i = 0; i<player.arme.array_chargeur.length; i++) {
+                let bullet = player.arme.array_chargeur[i];
+                bullet.posY -= player.arme.bulletspeed;
+                bullet.draw(ctx);
+
+            }
+        }
+        player.arme.drawStat(ctx);
         this.displayScore();
         this.displayLife();
-       // this.displayTime();
         this.displayNiveau();
         this.player.draw(ctx);
         requestAnimationFrame(()=> this.Animation());
@@ -120,7 +151,7 @@ class Game{
         ctx.save();
         ctx.font = "10px Calibri";
         ctx.fillStyle = "white";
-        ctx.fillText("Niveau 1", 10,65);
+        ctx.fillText("Niveau "+ this.niveauActuel, 10,65);
         ctx.restore();
     }
 
