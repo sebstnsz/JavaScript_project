@@ -130,7 +130,7 @@ function Menu() {
 
             if (xmouse > button1.getPosX() && xmouse < wText && ymouse > button1.getY() - button1.getHeight() && ymouse < button1.getY() + button1.getHeight() / 2) {
                console.log("play game !!!");
-               //ctx = null;
+               ctx = null;
                game = new Game(level["1"],avatar_array[index_selected_avatar]);
                game.init();
 

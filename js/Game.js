@@ -148,6 +148,7 @@ class Game{
                 this.obstacles.splice(i,1);
                 console.log("collision");
                 player.looseLife();
+
             }
 
             for(let j=0; j<player.arme.array_chargeur.length; j++) {
@@ -160,8 +161,12 @@ class Game{
 
 
         }
-
-        requestAnimationFrame(()=> this.animation());
+        if(player.life === 0) {
+            console.log("Stop game");
+            this.gameOver();
+        }else{
+            requestAnimationFrame(()=> this.animation());
+        }
 
 
     }
@@ -245,6 +250,30 @@ class Game{
         if ((x1 + l1 <= x2) || (x2 + l2 <= x1) || (y1 + h1 <= y2) || (y2 + h2 <= y1))
             return false;
         return true;
+    }
+
+    gameOver(){
+        let texte = "GAME OVER";
+        ctx.save();
+        this.drawRectArrondi(ctx,canvas.width/2-150,canvas.height/2-50,300,100,20,"white");
+        ctx.font = "50px Bebas";
+        ctx.fillStyle = "black";
+        ctx.fillText("GAME OVER",canvas.width/2 - ctx.measureText(this.txt).width/2,100);
+        ctx.restore();
+    }
+
+
+    drawRectArrondi(ctx, x, y, width, height, radius, style) {
+        ctx.save();
+        ctx.beginPath();
+        ctx.moveTo(x+radius, y);
+        ctx.arcTo(x+width, y, x+width, y+radius, radius);
+        ctx.arcTo(x+width, y+height, x+width-radius, y+height, radius);
+        ctx.arcTo(x, y+height, x, y+height-radius, radius);
+        ctx.arcTo(x, y, x+radius, y, radius);
+        ctx.fillStyle = style;
+        ctx.fill();
+        ctx.restore();
     }
 
 

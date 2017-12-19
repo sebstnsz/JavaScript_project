@@ -29,7 +29,7 @@ class PlayButton extends ElementMenu{
     draw(ctx){
         ctx.save();
 
-        ctx.font = this.fontsize + "px True Lies";
+        ctx.font = this.fontsize + "px Bebas";
         ctx.strokeStyle = "red";
         ctx.translate(this.x,this.y);
         this.width = ctx.measureText(this.txt).width;
