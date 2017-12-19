@@ -12,22 +12,8 @@ class Objet {
 
 	dessiner(ctx) {
 		ctx.save();
-		ctx.translate(this.posX-this.largeur/2, this.posY-this.hauteur/2);
-		ctx.fillStyle = "white";
-		ctx.fillRect(0,0,this.largeur,this.hauteur);
-		//ctx.drawImage(this.image,0,0,this.largeur,this.hauteur);
-		//ctx.translate(-this.posX + this.largeur/2, -this.posY + this.hauteur/2);
+		ctx.translate(this.posX, this.posY);
+		ctx.drawImage(this.image,0,0,this.largeur,this.hauteur);
 		ctx.restore();
-	}
-
-	moveX() { this.posX += this.vitesseX; }
-	moveY() { this.posY += this.vitesseY; }
-
-	changeDirX() { this.vitesseX = -this.vitesseX; }
-	changeDirY() { this.vitesseY = -this.vitesseY; }
-
-	animer() {
-		this.moveX();
-		this.moveY();
 	}
 }
