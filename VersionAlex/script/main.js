@@ -9,7 +9,7 @@ function main() {
 	level = {
 		"1" : {
 			"interval": 2000,
-			"obstacles": [s
+			"obstacles": ["easy"]
 		},
 		"2" : {
 			"interval": 2000,
@@ -19,7 +19,7 @@ function main() {
 			"interval": 2000,
 			"obstacles": ["medium", "hard"]
 		}
-	}
+	};
 
 	gf = new GameFramework(level["3"]);
 	gf.init();

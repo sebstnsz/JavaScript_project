@@ -2,7 +2,7 @@ window.onload = init;
 
 var menu;
 var game;
-
+var level;
 function init(){
     menu = new Menu();
     menu.init();
@@ -46,6 +46,23 @@ function Menu() {
         my_gradient2.addColorStop(0.75, "rgb(27, 1, 145)");
 
         button1 = new PlayButton(0, 430, 1, my_gradient, "PLAY GAME", 25, 5);
+
+
+        level = {
+            "1" : {
+                "interval": 2000,
+                "obstacles": ["easy"]
+            },
+            "2" : {
+                "interval": 2000,
+                "obstacles": ["easy", "medium"]
+            },
+            "3" : {
+                "interval": 2000,
+                "obstacles": ["medium", "hard"]
+            }
+        };
+
 
 
         canvas.addEventListener('click', function (e) {
@@ -113,8 +130,8 @@ function Menu() {
 
             if (xmouse > button1.getPosX() && xmouse < wText && ymouse > button1.getY() - button1.getHeight() && ymouse < button1.getY() + button1.getHeight() / 2) {
                console.log("play game !!!");
-               ctx = null;
-               game = new Game(avatar_array[index_selected_avatar] );
+               //ctx = null;
+               game = new Game(level["1"],avatar_array[index_selected_avatar]);
                game.init();
 
 

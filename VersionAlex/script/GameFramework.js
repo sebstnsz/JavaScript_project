@@ -12,7 +12,7 @@ function GameFramework(levelData) {
 		obstacles = [];
 
 		creerObstacle();
-		setInterval(function(){creerObstacle();}, levelData["interval"]);
+	//	setInterval(function(){creerObstacle();}, levelData["interval"]);
 
 		requestAnimationFrame(animation);
 	}
@@ -60,13 +60,13 @@ function GameFramework(levelData) {
 	}
 
 	function collision(obj1,obj2) {
-		var x1 = obj1.posX;
-		var y1 = obj1.posY;
+		var x1 = obj1.x;
+		var y1 = obj1.y;
 		var l1 = obj1.largeur;
 		var h1 = obj1.hauteur;
 
-		var x2 = obj2.posX;
-		var y2 = obj2.posY;
+		var x2 = obj2.x;
+		var y2 = obj2.y;
 		var l2 = obj2.largeur;
 		var h2 = obj2.hauteur;
 

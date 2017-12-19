@@ -1,6 +1,6 @@
 class Player extends Objet{
-    constructor(img,x,y,life,speed,long,larg,s){
-       super(img,x,y,life,speed,speed,long,larg,s);
+    constructor(img,x,y,life,speed,long,larg){
+       super(img,x,y,life,speed,speed,long,larg);
        this.score = 0;
        this.arme = new Arme(x,y,10,100,10,10,7.5);
     }
@@ -58,9 +58,9 @@ class Player extends Objet{
 
     drawInMenu(ctx){
         ctx.save();
-        ctx.translate(ctx.canvas.width/2 - this.long/2-17.5,ctx.canvas.height/2 - this.larg/2 - 30 );
+        ctx.translate(ctx.canvas.width/2 - this.largeur/2-17.5,ctx.canvas.height/2 - this.hauteur/2 - 30 );
         ctx.scale(1.5,1.5);
-        ctx.drawImage(this.image,0,0,this.larg,this.long);
+        ctx.drawImage(this.image,0,0,this.largeur,this.hauteur);
         ctx.restore();
     }
 
@@ -71,16 +71,19 @@ class Player extends Objet{
 
     shoot(){
 
-        let px = (this.long-this.arme.taillebullet)/2;
-        let py = (this.larg-this.arme.taillebullet)/2;
+        let px = (this.hauteur-this.arme.taillebullet)/2;
+        let py = (this.largeur-this.arme.taillebullet)/2;
 
-        if(this.arme.munition > this.arme.array_chargeur.length ){
+        if(this.arme.munition > 0 ){
             this.arme.index++;
             this.arme.array_chargeur.push(new Bullet(this.x+px,this.y+py,this.arme.taillebullet));
+            this.arme.munition--;
         }
     }
 
-
+    looseLife(){
+        this.life--;
+    }
 
 
 }

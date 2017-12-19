@@ -1,10 +1,10 @@
 class Obstacle extends Objet {
 	constructor(x,vx,vy,w,h,vie,img) {
-		super(x,-h,vx,vy,w,h,vie,img);
+		super(img,x,-h,vie,vx,vy,w,h);
 	}
 
-	moveX() { this.posX += this.vitesseX; }
-	moveY() { this.posY += this.vitesseY; }
+	moveX() { this.x += this.vitesseX; }
+	moveY() { this.y += this.vitesseY; }
 
 	animer() {
 		this.moveX();
@@ -14,7 +14,7 @@ class Obstacle extends Objet {
 	out(ctx) {
 		var w = ctx.canvas.width;
 		var h = ctx.canvas.height;
-		return (this.posY >= h) || (this.posX + this.largeur <= 0) || (this.posX >= w); // bas|gauche|droite
+		return (this.y >= h) || (this.x + this.largeur <= 0) || (this.y >= w); // bas|gauche|droite
 	}
 }
 

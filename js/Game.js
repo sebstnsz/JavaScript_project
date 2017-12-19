@@ -3,22 +3,31 @@ let canvas;
 let ctx;
 let inputStates =  {};
 let estPress = false;
+let that;
+
 
 
 class Game{
 
-    constructor(p){
+    constructor(level,p){
+        this.levelData = level;
         this.player = p;
         this.time = new Chrono();
         this.palierNiveau = [1000,2000,3000,4000,5000,6000,7000,8000,9000,10000];
         this.niveauActuel = 0;
+        this.obstacles = [];
     }
 
     init(){
         canvas = document.querySelector("#myCanvas");
         ctx = canvas.getContext("2d");
         player = this.player;
-        player.setPosition(canvas.width/2-player.larg/2,400);
+        player.setPosition(canvas.width/2-player.largeur/2,400);
+
+
+        this.creerObstacle();
+        setInterval(()=> this.creerObstacle(), this.levelData["interval"]);
+
         /*
           37 : left
           38 : up
@@ -57,10 +66,10 @@ class Game{
             }
         }, false);
 
-        this.Animation();
+        this.animation();
 
     }
-    Animation(){
+    animation(){
         for(let i = 0;i<this.palierNiveau.length;i++){
             if(player.score >= this.palierNiveau[i]){
                 this.niveauActuel = i+1;
@@ -77,7 +86,7 @@ class Game{
         }
 
         if (inputStates.right) {
-            if(player.x < canvas.width-player.larg){
+            if(player.x < canvas.width-player.largeur){
                player.droite();
             }
         }
@@ -89,7 +98,7 @@ class Game{
 
         }
         if(inputStates.down){
-            if(player.y < canvas.height-player.larg){
+            if(player.y < canvas.height-player.largeur){
                 player.bas();
             }
 
@@ -110,23 +119,49 @@ class Game{
 
         }
 
-
-        //Boucle For()
         if(player.arme.array_chargeur.length !== 0) {
             for (let i = 0; i<player.arme.array_chargeur.length; i++) {
                 let bullet = player.arme.array_chargeur[i];
-                bullet.posY -= player.arme.bulletspeed;
+                bullet.y -= player.arme.bulletspeed;
                 bullet.draw(ctx);
+
+                if (bullet.out(ctx)){
+                    player.arme.array_chargeur.splice(i, 1);
+                }
 
             }
         }
+
         this.player.draw(ctx);
         player.arme.drawStat(ctx);
         this.displayScore();
         this.displayLife();
         this.displayNiveau();
 
-        requestAnimationFrame(()=> this.Animation());
+        for(let i=0; i<this.obstacles.length; i++) {
+            let obstacle = this.obstacles[i];
+            obstacle.draw(ctx);
+            obstacle.animer();
+            if(obstacle.out(ctx))
+                this.obstacles.splice(i,1);
+            else if(this.collision(player, obstacle)){
+                this.obstacles.splice(i,1);
+                console.log("collision");
+                player.looseLife();
+            }
+
+            for(let j=0; j<player.arme.array_chargeur.length; j++) {
+                if(this.collision(obstacle,player.arme.array_chargeur[j])){
+                    this.obstacles.splice(i,1);
+                    player.arme.array_chargeur.splice(i, 1);
+                    console.log("boum");
+                }
+            }
+
+
+        }
+
+        requestAnimationFrame(()=> this.animation());
 
 
     }
@@ -174,6 +209,43 @@ class Game{
         ctx.restore();
     }
 
+    creerObstacle() {
+        var posX = Math.floor((Math.random()*(canvas.width-50)) + 50);
+
+        var nbObs = this.levelData["obstacles"].length;
+        var randObs = Math.floor(Math.random()*nbObs);
+        var newObs;
+
+        switch(this.levelData["obstacles"][randObs]) {
+            case "easy":
+                newObs = new ObstacleEasy(posX);
+                break;
+            case "medium":
+                newObs = new ObstacleMedium(posX);
+                break;
+            case "hard":
+                newObs = new ObstacleHard(posX);
+                break;
+        }
+
+        this.obstacles.push(newObs);
+    }
+
+    collision(obj1,obj2) {
+        var x1 = obj1.x;
+        var y1 = obj1.y;
+        var l1 = obj1.largeur;
+        var h1 = obj1.hauteur;
+
+        var x2 = obj2.x;
+        var y2 = obj2.y;
+        var l2 = obj2.largeur;
+        var h2 = obj2.hauteur;
+
+        if ((x1 + l1 <= x2) || (x2 + l2 <= x1) || (y1 + h1 <= y2) || (y2 + h2 <= y1))
+            return false;
+        return true;
+    }
 
 
 }

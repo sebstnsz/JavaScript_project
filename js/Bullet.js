@@ -1,14 +1,18 @@
 class Bullet{
     constructor(x,y,tb){
-        this.posX = x;
-        this.posY =y;
-        this.taillebullet = tb;
+        this.x = x;
+        this.y =y;
+        this.largeur = tb;
+        this.hauteur = tb;
     }
 
     draw(ctx){
         ctx.fillStyle = "white";
-        ctx.fillRect(this.posX,this.posY,this.taillebullet,this.taillebullet);
+        ctx.fillRect(this.x,this.y,this.largeur,this.hauteur);
     }
 
+    out() {
+        return (this.y+this.hauteur < 0);
+    }
 
 }
