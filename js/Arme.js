@@ -20,6 +20,7 @@ class Arme{
         ctx.save();
         ctx.font = "15px Arial";
         ctx.fillStyle = "white";
+        ctx.translate(20,10);
         ctx.fillText("Munition", 300, 450);
         ctx.fillText(this.munition - this.array_chargeur.length+ "/" + this.munition, 300, 470);
         ctx.restore();

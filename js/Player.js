@@ -1,6 +1,6 @@
 class Player extends Objet{
     constructor(img,x,y,life,speed,long,larg,s){
-       super(img,x,y,life,speed,speed,speed,long,larg,s);
+       super(img,x,y,life,speed,speed,long,larg,s);
        this.score = 0;
        this.arme = new Arme(x,y,10,100,10,10,7.5);
     }
@@ -12,16 +12,16 @@ class Player extends Objet{
     1 = right
   */
     gauche(){
-        this.x = this.x - this.speed;
+        this.x = this.x - this.vitesseX;
     }
     droite(){
-        this.x = this.x + this.speed;
+        this.x = this.x + this.vitesseX;
     }
     haut(){
-        this.y = this.y - this.speed;
+        this.y = this.y - this.vitesseY;
     }
     bas(){
-        this.y = this.y + this.speed;
+        this.y = this.y + this.vitesseY;
     }
 
     drawStatInMenu(ctx){
@@ -40,7 +40,7 @@ class Player extends Objet{
                 heart = new Heart(x,y,scale,"rgb(51, 51, 51)");
             }
 
-            if(i<this.speed){
+            if(i<this.vitesseX){
                 speedcircle = new SpeedCircle(x,y,scale,"rgb(255, 214, 68)");
             }else{
                 speedcircle = new SpeedCircle(x,y,scale,"rgb(51, 51, 51)");

@@ -1,13 +1,12 @@
 class Objet{
 
-    constructor(img,x,y,life,vx,vy,speed,long,larg){
+    constructor(img,x,y,life,vx,vy,long,larg){
         this.image = img;
         this.x = x;
         this.y = y;
         this.life = life; // 0 to 10
         this.vitesseX = vx;
         this.vitesseY = vy;
-        this.speed = speed; // 0 to 10
         this.long = long;
         this.larg = larg;
     }

@@ -120,11 +120,12 @@ class Game{
 
             }
         }
+        this.player.draw(ctx);
         player.arme.drawStat(ctx);
         this.displayScore();
         this.displayLife();
         this.displayNiveau();
-        this.player.draw(ctx);
+
         requestAnimationFrame(()=> this.Animation());
 
 
@@ -163,11 +164,9 @@ class Game{
         for(let i  = 0; i<10;i++){
             if(i < player.life){
                 heart = new Heart(x,y,0.15,"rgb(237, 16, 53)");
-            }else{
-                heart = new Heart(x,y,0.15,"rgb(51, 51, 51)");
+                heart.draw(ctx);
             }
 
-            heart.draw(ctx);
 
             x = x + 17.5;
         }
