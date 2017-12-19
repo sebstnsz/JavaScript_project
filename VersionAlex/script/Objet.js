@@ -12,8 +12,8 @@ class Objet {
 
 	dessiner(ctx) {
 		ctx.save();
-		ctx.translate(this.posX, this.posY);
-		ctx.drawImage(this.image,0,0,this.largeur,this.hauteur);
+		ctx.translate();
+		ctx.drawImage(this.image, this.posX, this.posY, this.largeur, this.hauteur);
 		ctx.restore();
 	}
 }
