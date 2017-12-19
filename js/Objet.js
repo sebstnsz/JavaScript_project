@@ -10,7 +10,7 @@ class Objet{
         this.long = long;
         this.larg = larg;
     }
-
+    
     setPosition(x,y){
         this.x = x;
         this.y = y;

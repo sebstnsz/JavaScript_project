@@ -7,7 +7,6 @@ class Player extends Objet{
 /*
     0 = up
     1 = down
-
     0 = left
     1 = right
   */
