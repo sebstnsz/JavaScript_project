@@ -30,7 +30,7 @@ function Menu() {
         canvas = document.querySelector("#myCanvas");
         ctx = canvas.getContext("2d");
 
-        avatar1 = new Player(document.getElementById("space1"), 0, 0, 4, 8, 70, 70);
+        avatar1 = new Player(document.getElementById("space1"), 0, 0, 1, 8, 70, 70);
         avatar2 = new Player(document.getElementById("space2"), 0, 0, 7, 3, 70, 70);
         avs1 = new AvatarSelector(40, 110, 20, 20, 1, "white", document.getElementById("back"));
         avs2 = new AvatarSelector(canvas.width / 2 - 50, 110, 20, 20, 1, "white", document.getElementById("next"));

@@ -3,7 +3,6 @@ let canvas;
 let ctx;
 let inputStates =  {};
 let estPress = false;
-let that;
 
 
 
@@ -162,8 +161,9 @@ class Game{
 
         }
         if(player.life === 0) {
-            console.log("Stop game");
             this.gameOver();
+
+            
         }else{
             requestAnimationFrame(()=> this.animation());
         }
@@ -253,12 +253,35 @@ class Game{
     }
 
     gameOver(){
+        let my_gradient2 = ctx.createLinearGradient(0, 0, 400, 0);
+        my_gradient2.addColorStop(0.3, "rgb(27, 1, 145)");
+        my_gradient2.addColorStop(0.5, "rgb(216, 21, 21)");
+        my_gradient2.addColorStop(0.7, "rgb(27, 1, 145)");
+
         let texte = "GAME OVER";
         ctx.save();
-        this.drawRectArrondi(ctx,canvas.width/2-150,canvas.height/2-50,300,100,20,"white");
-        ctx.font = "50px Bebas";
-        ctx.fillStyle = "black";
-        ctx.fillText("GAME OVER",canvas.width/2 - ctx.measureText(this.txt).width/2,100);
+        ctx.fillStyle = "rgba(0, 0, 0,0.6)";
+        ctx.fillRect(0,0,canvas.width,canvas.height);
+       // this.drawRectArrondi(ctx,canvas.width/2-150,canvas.height/2-50,300,100,20,"rgb(255, 255, 255)");
+        ctx.font = "70px Bebas";
+        ctx.fillStyle = "white";
+        ctx.translate(0,-50);
+        ctx.fillText(texte,canvas.width/2 - ctx.measureText(texte).width/2,canvas.height/2);
+        ctx.translate(0,70);
+        ctx.font = "40px True Lies";
+
+        ctx.shadowColor = "red";
+        ctx.shadowOffsetX = 0;
+        ctx.shadowOffsetY = 0;
+        ctx.shadowBlur = 40;
+        ctx.fillStyle = my_gradient2;
+        ctx.fillText(player.score,canvas.width/2 - ctx.measureText(player.score).width/2,canvas.height/2);
+
+        ctx.fillStyle = "white";
+        let texte2 = "Press 'Space'";
+        ctx.font = "15px Arial";
+        ctx.translate(0,50);
+        ctx.fillText(texte2,canvas.width/2 - ctx.measureText(texte2).width/2,canvas.height/2);
         ctx.restore();
     }
 
