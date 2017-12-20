@@ -2,11 +2,11 @@ window.onload = init;
 
 var menu;
 var game;
-var level;
+var levels;
+
 function init(){
     menu = new Menu();
     menu.init();
-
 }
 
 function Menu() {
@@ -47,23 +47,13 @@ function Menu() {
 
         button1 = new PlayButton(0, 430, 1, my_gradient, "PLAY GAME", 25, 5);
 
-
-        level = {
-            "1" : {
-                "interval": 2000,
-                "obstacles": ["easy"]
-            },
-            "2" : {
-                "interval": 2000,
-                "obstacles": ["easy", "medium"]
-            },
-            "3" : {
-                "interval": 2000,
-                "obstacles": ["medium", "hard"]
-            }
-        };
-
-
+        levels = [
+            new Level(5000, ["easy"], 0),
+            new Level(5000, ["easy", "medium"], 0),
+            new Level(2000, ["easy", "medium"], 0),
+            new Level(2000, ["hard", "medium"], 0),
+            new Level(1000, ["hard", "medium"], 0)
+        ];
 
         canvas.addEventListener('click', function (e) {
             let rect = canvas.getBoundingClientRect();
@@ -131,7 +121,7 @@ function Menu() {
             if (xmouse > button1.getPosX() && xmouse < wText && ymouse > button1.getY() - button1.getHeight() && ymouse < button1.getY() + button1.getHeight() / 2) {
                console.log("play game !!!");
                ctx = null;
-               game = new Game(level["1"],avatar_array[index_selected_avatar]);
+               game = new Game(levels[4],avatar_array[index_selected_avatar]);
                game.init();
 
 
