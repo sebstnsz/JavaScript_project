@@ -9,11 +9,9 @@ let estPress = false;
 class Game{
 
     constructor(level,p){
-        this.levelData = level;
+        this.level = level;
         this.player = p;
         this.time = new Chrono();
-        this.palierNiveau = [1000,2000,3000,4000,5000,6000,7000,8000,9000,10000];
-        this.niveauActuel = 0;
         this.obstacles = [];
     }
 
@@ -23,9 +21,8 @@ class Game{
         player = this.player;
         player.setPosition(canvas.width/2-player.largeur/2,400);
 
-
         this.creerObstacle();
-        setInterval(()=> this.creerObstacle(), this.levelData["interval"]);
+        setInterval(()=> this.creerObstacle(), this.level.interval);
 
         /*
           37 : left
@@ -49,7 +46,6 @@ class Game{
             }
         }, false);
 
-
         window.addEventListener('keyup', function(event) {
             if (event.keyCode === 37) {
                 inputStates.left = false;
@@ -66,16 +62,11 @@ class Game{
         }, false);
 
         this.animation();
-
     }
+
     animation(){
-        for(let i = 0;i<this.palierNiveau.length;i++){
-            if(player.score >= this.palierNiveau[i]){
-                this.niveauActuel = i+1;
-            }
-        }
         this.time.increment();
-        player.score = this.time.sec * 187;
+        player.score = this.time.sec * 100;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         // Checks inputStates
         if (inputStates.left) {
@@ -83,34 +74,27 @@ class Game{
                player.gauche();
            }
         }
-
         if (inputStates.right) {
             if(player.x < canvas.width-player.largeur){
                player.droite();
             }
         }
-
         if(inputStates.up){
             if(player.y >10){
                 player.haut();
             }
-
         }
         if(inputStates.down){
             if(player.y < canvas.height-player.largeur){
                 player.bas();
             }
-
         }
 
-
         window.addEventListener('keydown', function(event) {
-
             if (event.keyCode === 32) {
                 estPress = true;
             }
         }, false);
-
 
         if(estPress === true){
             estPress = false;
@@ -132,10 +116,6 @@ class Game{
         }
 
         this.player.draw(ctx);
-        player.arme.drawStat(ctx);
-        this.displayScore();
-        this.displayLife();
-        this.displayNiveau();
 
         for(let i=0; i<this.obstacles.length; i++) {
             let obstacle = this.obstacles[i];
@@ -147,7 +127,6 @@ class Game{
                 this.obstacles.splice(i,1);
                 console.log("collision");
                 player.looseLife();
-
             }
 
             for(let j=0; j<player.arme.array_chargeur.length; j++) {
@@ -157,20 +136,19 @@ class Game{
                     console.log("boum");
                 }
             }
-
-
         }
-        if(player.life === 0) {
-            this.gameOver();
 
-            
+        player.arme.drawStat(ctx);
+        this.displayScore();
+        this.displayLife();
+        this.displayNiveau();
+
+        if(player.life === 0) {
+            this.gameOver();          
         }else{
             requestAnimationFrame(()=> this.animation());
         }
-
-
     }
-
 
     displayScore(){
         ctx.save();
@@ -206,22 +184,19 @@ class Game{
                 heart = new Heart(x,y,0.15,"rgb(237, 16, 53)");
                 heart.draw(ctx);
             }
-
-
             x = x + 17.5;
         }
-
         ctx.restore();
     }
 
     creerObstacle() {
         var posX = Math.floor((Math.random()*(canvas.width-50)) + 50);
 
-        var nbObs = this.levelData["obstacles"].length;
+        var nbObs = this.level.obstacles.length;
         var randObs = Math.floor(Math.random()*nbObs);
         var newObs;
 
-        switch(this.levelData["obstacles"][randObs]) {
+        switch(this.level.obstacles[randObs]) {
             case "easy":
                 newObs = new ObstacleEasy(posX);
                 break;
@@ -232,7 +207,6 @@ class Game{
                 newObs = new ObstacleHard(posX);
                 break;
         }
-
         this.obstacles.push(newObs);
     }
 
@@ -262,7 +236,6 @@ class Game{
         ctx.save();
         ctx.fillStyle = "rgba(0, 0, 0,0.6)";
         ctx.fillRect(0,0,canvas.width,canvas.height);
-       // this.drawRectArrondi(ctx,canvas.width/2-150,canvas.height/2-50,300,100,20,"rgb(255, 255, 255)");
         ctx.font = "70px Bebas";
         ctx.fillStyle = "white";
         ctx.translate(0,-50);
@@ -284,20 +257,4 @@ class Game{
         ctx.fillText(texte2,canvas.width/2 - ctx.measureText(texte2).width/2,canvas.height/2);
         ctx.restore();
     }
-
-
-    drawRectArrondi(ctx, x, y, width, height, radius, style) {
-        ctx.save();
-        ctx.beginPath();
-        ctx.moveTo(x+radius, y);
-        ctx.arcTo(x+width, y, x+width, y+radius, radius);
-        ctx.arcTo(x+width, y+height, x+width-radius, y+height, radius);
-        ctx.arcTo(x, y+height, x, y+height-radius, radius);
-        ctx.arcTo(x, y, x+radius, y, radius);
-        ctx.fillStyle = style;
-        ctx.fill();
-        ctx.restore();
-    }
-
-
 }
