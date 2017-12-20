@@ -144,7 +144,7 @@ class Game{
         this.displayNiveau();
 
         if(player.life === 0) {
-            this.gameOver();          
+            this.gameOver();
         }else{
             requestAnimationFrame(()=> this.animation());
         }
@@ -241,13 +241,13 @@ class Game{
         ctx.translate(0,-50);
         ctx.fillText(texte,canvas.width/2 - ctx.measureText(texte).width/2,canvas.height/2);
         ctx.translate(0,70);
-        ctx.font = "40px True Lies";
 
         ctx.shadowColor = "red";
         ctx.shadowOffsetX = 0;
         ctx.shadowOffsetY = 0;
         ctx.shadowBlur = 40;
         ctx.fillStyle = my_gradient2;
+        ctx.font = "40px Bebas";
         ctx.fillText(player.score,canvas.width/2 - ctx.measureText(player.score).width/2,canvas.height/2);
 
         ctx.fillStyle = "white";
@@ -256,5 +256,13 @@ class Game{
         ctx.translate(0,50);
         ctx.fillText(texte2,canvas.width/2 - ctx.measureText(texte2).width/2,canvas.height/2);
         ctx.restore();
+
+        window.addEventListener('keydown', function(event) {
+
+            if (event.keyCode === 32) {
+                let menu = new Menu();
+                menu.init();
+            }
+        }, false);
     }
 }

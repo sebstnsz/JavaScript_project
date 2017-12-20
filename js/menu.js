@@ -30,7 +30,7 @@ function Menu() {
         canvas = document.querySelector("#myCanvas");
         ctx = canvas.getContext("2d");
 
-        avatar1 = new Player(document.getElementById("space1"), 0, 0, 1, 8, 70, 70);
+        avatar1 = new Player(document.getElementById("space1"), 0, 0, 4, 8, 70, 70);
         avatar2 = new Player(document.getElementById("space2"), 0, 0, 7, 3, 70, 70);
         avs1 = new AvatarSelector(40, 110, 20, 20, 1, "white", document.getElementById("back"));
         avs2 = new AvatarSelector(canvas.width / 2 - 50, 110, 20, 20, 1, "white", document.getElementById("next"));
@@ -54,6 +54,10 @@ function Menu() {
             new Level(2000, ["hard", "medium"], 0),
             new Level(1000, ["hard", "medium"], 0)
         ];
+        button1 = new PlayButton(0, 430, 1, my_gradient, "PLAY GAME", 40, 5);
+
+
+
 
         canvas.addEventListener('click', function (e) {
             let rect = canvas.getBoundingClientRect();
@@ -98,13 +102,13 @@ function Menu() {
             let wText = button1.getPosX() + button1.getWidth();
 
             if (xmouse > button1.getPosX() && xmouse < wText && ymouse > button1.getY() - button1.getHeight() && ymouse < button1.getY() + button1.getHeight() / 2) {
-                if (button1.fontsize < 26) {
+                if (button1.fontsize < 41) {
                     button1.fontsize += 2;
                     button1.blur += 5;
                     button1.color = my_gradient2;
                 }
             } else {
-                if (button1.fontsize > 25) {
+                if (button1.fontsize > 40) {
                     button1.fontsize -= 2;
                     button1.blur -= 5;
                     button1.color = my_gradient;
