@@ -5,10 +5,9 @@ let inputStates =  {};
 let estPress = false;
 
 
-
 class Game{
 
-    constructor(level,p){
+    constructor(level,p,m){
         this.level = level;
         this.player = p;
         this.time = new Chrono();
@@ -16,6 +15,7 @@ class Game{
     }
 
     init(){
+        console.log("play loaded");
         canvas = document.querySelector("#myCanvas");
         ctx = canvas.getContext("2d");
         player = this.player;
@@ -23,7 +23,7 @@ class Game{
 
         this.creerObstacle();
         setInterval(()=> this.creerObstacle(), this.level.interval);
-
+        console.log(player);
         /*
           37 : left
           38 : up
@@ -143,8 +143,9 @@ class Game{
         this.displayLife();
         this.displayNiveau();
 
-        if(player.life === 0) {
+        if(player.life <= 0) {
             this.gameOver();
+            return;
         }else{
             requestAnimationFrame(()=> this.animation());
         }
@@ -247,7 +248,7 @@ class Game{
         ctx.shadowOffsetY = 0;
         ctx.shadowBlur = 40;
         ctx.fillStyle = my_gradient2;
-        ctx.font = "40px Bebas";
+        ctx.font = "40px True lies";
         ctx.fillText(player.score,canvas.width/2 - ctx.measureText(player.score).width/2,canvas.height/2);
 
         ctx.fillStyle = "white";
@@ -257,12 +258,6 @@ class Game{
         ctx.fillText(texte2,canvas.width/2 - ctx.measureText(texte2).width/2,canvas.height/2);
         ctx.restore();
 
-        window.addEventListener('keydown', function(event) {
-
-            if (event.keyCode === 32) {
-                let menu = new Menu();
-                menu.init();
-            }
-        }, false);
+        console.log("game over");
     }
 }
