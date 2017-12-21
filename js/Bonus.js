@@ -1,28 +1,23 @@
 class Bonus extends Objet {
-	constructor(x,vy,img) {
-		super(img,x,-h,1,0,vy,50,50);
+	constructor(x,img) {
+		super(img,x,-h,1,0,2,50,50);
 	}
 
-	animer() {
-		this.x += this.vitesseX;
-		this.y += this.vitesseY;
-	}
+	animer() { this.y += this.vitesseY; }
 
-	out(ctx) {
-		return this.y >= ctx.canvas.height;
-	}
+	out(ctx) { return this.y >= ctx.canvas.height; }
 }
 
 class BonusVie extends Bonus {
-	constructor(x,vy) {
+	constructor(x) {
 		let img = document.querySelector("#bonusvie");
-		super(x,vy,img);
+		super(x,img);
 	}
 }
 
-class BonusMunition extends Bonus {
-	constructor(x,vy) {
-		let img = document.querySelector("#bonusmunition");
-		super(x,vy,img);
+class BonusArme extends Bonus {
+	constructor(x) {
+		let img = document.querySelector("#bonusarme");
+		super(x,img);
 	}
 }

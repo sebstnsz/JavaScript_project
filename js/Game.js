@@ -12,6 +12,7 @@ class Game{
         this.player = p;
         this.time = new Chrono();
         this.obstacles = [];
+        this.bonus = [];
     }
 
     init(){
@@ -24,7 +25,7 @@ class Game{
         this.creerObstacle();
         setInterval(()=> this.creerObstacle(), this.level.interval);
         //setInterval(()=> this.endLevel(), this.level.duree);
-        console.log(player);
+        
         /*
           37 : left
           38 : up
@@ -33,33 +34,29 @@ class Game{
           32 : space
            */
         window.addEventListener('keydown', function(event) {
-            if (event.keyCode === 37) {
+            if (event.keyCode === 37)
                 inputStates.left = true;
-
-            }else if(event.keyCode === 38){
+            else if(event.keyCode === 38)
                 inputStates.up = true;
-            }else if(event.keyCode === 39){
+            else if(event.keyCode === 39)
                 inputStates.right = true;
-            }else if(event.keyCode === 40){
+            else if(event.keyCode === 40)
                 inputStates.down = true;
-            } else if (event.keyCode === 32) {
+            else if (event.keyCode === 32)
                 inputStates.space = true;
-            }
         }, false);
 
         window.addEventListener('keyup', function(event) {
-            if (event.keyCode === 37) {
+            if (event.keyCode === 37)
                 inputStates.left = false;
-
-            }else if(event.keyCode === 38){
+            else if(event.keyCode === 38)
                 inputStates.up = false;
-            }else if(event.keyCode === 39){
+            else if(event.keyCode === 39)
                 inputStates.right = false;
-            }else if(event.keyCode === 40){
+            else if(event.keyCode === 40)
                 inputStates.down = false;
-            }else if (event.keyCode === 32) {
+            else if (event.keyCode === 32)
                 inputStates.space = false;
-            }
         }, false);
 
         this.animation();
@@ -69,38 +66,33 @@ class Game{
         this.time.increment();
         player.score = this.time.sec * 100;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+
         // Checks inputStates
         if (inputStates.left) {
-           if(player.x > 0){
+           if(player.x > 0)
                player.gauche();
-           }
         }
         if (inputStates.right) {
-            if(player.x < canvas.width-player.largeur){
+            if(player.x < canvas.width-player.largeur)
                player.droite();
-            }
         }
         if(inputStates.up){
-            if(player.y >10){
+            if(player.y >10)
                 player.haut();
-            }
         }
         if(inputStates.down){
-            if(player.y < canvas.height-player.largeur){
+            if(player.y < canvas.height-player.largeur)
                 player.bas();
-            }
         }
 
         window.addEventListener('keydown', function(event) {
-            if (event.keyCode === 32) {
+            if (event.keyCode === 32)
                 estPress = true;
-            }
         }, false);
 
         if(estPress === true){
             estPress = false;
             player.shoot();
-
         }
 
         if(player.arme.array_chargeur.length !== 0) {
@@ -112,7 +104,6 @@ class Game{
                 if (bullet.out(ctx)){
                     player.arme.array_chargeur.splice(i, 1);
                 }
-
             }
         }
 
@@ -126,7 +117,6 @@ class Game{
                 this.obstacles.splice(i,1);
             else if(this.collision(player, obstacle)){
                 this.obstacles.splice(i,1);
-
                 player.looseLife();
             }
 
@@ -142,6 +132,20 @@ class Game{
                       }
                   }
                     player.arme.array_chargeur.splice(j, 1);
+                }
+            }
+        }
+        if(this.bonus.length > 0) {
+            for(let k=0; k<this.bonus.length; k++) {
+                let bns = this.bonus[k];
+                bns.draw(ctx);
+                bns.animer();
+                if(bns.out(ctx))
+                    this.bonus.splice(k,1);
+                else if(this.collision(player, bonus)) {
+                    this.bonus.splice(k,1);
+                    // gain bonus
+                    console.log("bonus !");
                 }
             }
         }
@@ -198,12 +202,15 @@ class Game{
         ctx.restore();
     }
 
-    creerObstacle() {
-        var ecartObs = this.level.ecart;
-        var nbPosX = canvas.width/ecartObs;   // 5
-        var rand = Math.floor(Math.random()*nbPosX);  // 0 à 4
-        var posX = rand*100 + 40;
+    randomPosX() {
+        var nbPosX = canvas.width/this.level.ecart;
+        var rand = Math.floor(Math.random()*nbPosX);
+        var posX = rand*this.level.ecart + this.level.ecart/2;
+        return posX;
+    }
 
+    creerObstacle() {
+        var posX = randomPosX;
         var nbObs = this.level.obstacles.length;
         var randObs = Math.floor(Math.random()*nbObs);
         var newObs;
@@ -220,6 +227,36 @@ class Game{
                 break;
         }
         this.obstacles.push(newObs);
+    }
+
+    creerBonus() {
+        var lvl = this.level.id;
+        var dureeLvl = this.level.duree;
+        var posX = randomPosX;
+
+        var intervalVie;
+        var intervalArme;
+
+        if(lvl==1)
+            intervalVie = dureeLvl*2/3;
+        else
+            intervalVie = dureeLvl*1/3;
+
+        setInterval(() => this.bonus.push(new BonusVie(posX), intervalVie);
+
+        /*switch(lvl) {
+            case 2:
+        }*/
+
+        // level 1 : un seul bonus vie au bout de dureeLvl*2/3
+        // sinon : 2 bonus vie à 1/3 et 2/3
+
+        // level 2-3 : bonus arme niveau 1
+
+        // level 4-5 : idem + bonus arme niveau 2
+
+
+        // setInterval(() => this.bonus.push(), );
     }
 
     collision(obj1,obj2) {
