@@ -24,7 +24,7 @@ class ObstacleEasy extends Obstacle {
 		let vy=1;
 		let w=30;
 		let h=30;
-		let vie=0;
+		let vie=10;
 		let img = document.querySelector("#meteor");
 		super(x,vx,vy,w,h,vie,img);
 	}
@@ -36,7 +36,7 @@ class ObstacleMedium extends Obstacle {
 		let vy=2;
 		let w=50;
 		let h=50;
-		let vie=10;
+		let vie=20;
 		let img = document.querySelector("#asteroid");
 		super(x,vx,vy,w,h,vie,img);
 	}
@@ -48,7 +48,7 @@ class ObstacleHard extends Obstacle {
 		let vy=3;
 		let w=70;
 		let h=70;
-		let vie=20;
+		let vie=50;
 		let img = document.querySelector("#milky");
 		super(x,vx,vy,w,h,vie,img);
 	}

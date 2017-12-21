@@ -125,15 +125,22 @@ class Game{
                 this.obstacles.splice(i,1);
             else if(this.collision(player, obstacle)){
                 this.obstacles.splice(i,1);
-                console.log("collision");
+
                 player.looseLife();
             }
 
             for(let j=0; j<player.arme.array_chargeur.length; j++) {
                 if(this.collision(obstacle,player.arme.array_chargeur[j])){
-                    this.obstacles.splice(i,1);
-                    player.arme.array_chargeur.splice(i, 1);
-                    console.log("boum");
+                  obstacle.life -= player.arme.degat;
+                  if(player.arme.array_chargeur[j].out()){
+                      player.arme.array_chargeur.splice(j, 1);
+                  }else {
+                      if(obstacle.life <= 0){
+                          this.obstacles.splice(i,1);
+                          player.arme.array_chargeur.splice(j, 1);
+                      }
+                  }
+                    player.arme.array_chargeur.splice(j, 1);
                 }
             }
         }
