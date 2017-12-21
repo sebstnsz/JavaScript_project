@@ -23,14 +23,12 @@ function Menu() {
     //Bouton IHM
     let avs1, avs2;
     let button1;
-    game = null;
 
 
     function start() {
         console.log(menu);
         canvas = document.querySelector("#myCanvas");
         ctx = canvas.getContext("2d");
-
         avatar1 = new Player(document.getElementById("space1"), 0, 0, 1, 8, 70, 70);
         avatar2 = new Player(document.getElementById("space2"), 0, 0, 7, 3, 70, 70);
 
@@ -62,9 +60,8 @@ function Menu() {
 
 
 
-
+        let rect = canvas.getBoundingClientRect();
         canvas.addEventListener('click', function (e) {
-            let rect = canvas.getBoundingClientRect();
             let xmouse = e.clientX - rect.left;
             let ymouse = e.clientY - rect.top;
             if (xmouse > avs1.getX() * 2 && xmouse < (avs1.getX() * 2 + 20) && ymouse > avs1.getY() * 2 && ymouse < (avs1.getY() * 2 + 20)) {
@@ -81,7 +78,6 @@ function Menu() {
         });
 
         canvas.addEventListener('mousemove', function (e) {
-            let rect = canvas.getBoundingClientRect();
             let xmouse = e.clientX - rect.left;
             let ymouse = e.clientY - rect.top;
 
@@ -100,6 +96,7 @@ function Menu() {
 
 
         canvas.addEventListener('mousemove', function (e) {
+
             let rect = canvas.getBoundingClientRect();
             let xmouse = e.clientX - rect.left;
             let ymouse = e.clientY - rect.top;
@@ -127,9 +124,12 @@ function Menu() {
             let wText = button1.getPosX() + button1.getWidth();
 
             if (xmouse > button1.getPosX() && xmouse < wText && ymouse > button1.getY() - button1.getHeight() && ymouse < button1.getY() + button1.getHeight() / 2) {
-               console.log("play game !!!");
+                console.log("play game !!!");
                game = new Game(levels[4],avatar_array[index_selected_avatar]);
                game.init();
+               ctx = null;
+               canvas = null;
+
 
 
             }
@@ -181,6 +181,8 @@ function Menu() {
 
         // 4 - On rapelle 60 fois par seconde la fonction
         requestAnimationFrame(Animation);
+
+
     }
 
 

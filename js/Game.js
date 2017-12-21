@@ -259,5 +259,7 @@ class Game{
         ctx.restore();
 
         console.log("game over");
+        let menu = new Menu();
+        menu.start();
     }
 }
