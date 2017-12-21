@@ -29,7 +29,7 @@ function Menu() {
         console.log(menu);
         canvas = document.querySelector("#myCanvas");
         ctx = canvas.getContext("2d");
-        avatar1 = new Player(document.getElementById("space1"), 0, 0, 1, 8, 70, 70);
+        avatar1 = new Player(document.getElementById("space1"), 0, 0, 4, 8, 70, 70);
         avatar2 = new Player(document.getElementById("space2"), 0, 0, 7, 3, 70, 70);
 
         avatar_array.push(avatar1);
