@@ -1,14 +1,13 @@
 window.onload = init;
 
-var menu;
-var game;
 var levels;
+let menu;
+let game;
 
 function init(){
     menu = new Menu();
-    menu.init();
+    menu.start();
 }
-
 function Menu() {
     let canvas, ctx;
 
@@ -24,14 +23,22 @@ function Menu() {
     //Bouton IHM
     let avs1, avs2;
     let button1;
+    game = null;
 
 
-    function init() {
+    function start() {
+        console.log(menu);
         canvas = document.querySelector("#myCanvas");
         ctx = canvas.getContext("2d");
 
-        avatar1 = new Player(document.getElementById("space1"), 0, 0, 4, 8, 70, 70);
+        avatar1 = new Player(document.getElementById("space1"), 0, 0, 1, 8, 70, 70);
         avatar2 = new Player(document.getElementById("space2"), 0, 0, 7, 3, 70, 70);
+
+        avatar_array.push(avatar1);
+        avatar_array.push(avatar2);
+
+
+
         avs1 = new AvatarSelector(40, 110, 20, 20, 1, "white", document.getElementById("back"));
         avs2 = new AvatarSelector(canvas.width / 2 - 50, 110, 20, 20, 1, "white", document.getElementById("next"));
 
@@ -44,9 +51,6 @@ function Menu() {
         my_gradient2.addColorStop(0.3, "rgb(27, 1, 145)");
         my_gradient2.addColorStop(0.5, "rgb(216, 21, 21)");
         my_gradient2.addColorStop(0.75, "rgb(27, 1, 145)");
-
-        button1 = new PlayButton(0, 430, 1, my_gradient, "PLAY GAME", 25, 5);
-
         levels = [
             new Level(5000, ["easy"], 0),
             new Level(5000, ["easy", "medium"], 0),
@@ -124,17 +128,12 @@ function Menu() {
 
             if (xmouse > button1.getPosX() && xmouse < wText && ymouse > button1.getY() - button1.getHeight() && ymouse < button1.getY() + button1.getHeight() / 2) {
                console.log("play game !!!");
-               ctx = null;
                game = new Game(levels[4],avatar_array[index_selected_avatar]);
                game.init();
 
 
             }
         });
-
-        avatar_array.push(avatar1);
-        avatar_array.push(avatar2);
-
         Animation();
 
     }
@@ -217,12 +216,15 @@ function Menu() {
 
     }
 
+
     return {
-        init: init
+        start: start
 
     }
 
 }
+
+
 
 
 
