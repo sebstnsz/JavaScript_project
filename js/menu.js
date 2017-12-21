@@ -50,12 +50,12 @@ function Menu() {
         my_gradient2.addColorStop(0.5, "rgb(216, 21, 21)");
         my_gradient2.addColorStop(0.75, "rgb(27, 1, 145)");
         levels = [
-            // durée, obstacles, intervalle, image
-            new Level(30000, ["easy"], 5000, 0),
-            new Level(30000, ["easy", "medium"], 5000, 0),
-            new Level(30000, ["easy", "medium"], 2000, 0),
-            new Level(30000, ["medium", "hard"], 2000, 0),
-            new Level(60000, ["easy", "medium", "hard"], 1000, 0)
+            // numéro, durée, obstacles, écart, intervalle, image
+            new Level(1, 30000, ["easy"], 100, 5000, 0),
+            new Level(2, 30000, ["easy", "medium"], 100, 5000, 0),
+            new Level(3, 30000, ["easy", "medium"], 100, 2000, 0),
+            new Level(4, 30000, ["medium", "hard"], 100, 2000, 0),
+            new Level(5, 60000, ["easy", "medium", "hard"], 100, 1000, 0)
         ];
         button1 = new PlayButton(0, 430, 1, my_gradient, "PLAY GAME", 40, 5);
 

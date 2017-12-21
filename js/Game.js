@@ -23,6 +23,7 @@ class Game{
 
         this.creerObstacle();
         setInterval(()=> this.creerObstacle(), this.level.interval);
+        //setInterval(()=> this.endLevel(), this.level.duree);
         console.log(player);
         /*
           37 : left
@@ -198,7 +199,7 @@ class Game{
     }
 
     creerObstacle() {
-        var ecartObs = 100;
+        var ecartObs = level.ecart;
         var nbPosX = canvas.width/ecartObs;   // 5
         var rand = Math.floor(Math.random()*nbPosX);  // 0 à 4
         var posX = rand*100 + 40;
