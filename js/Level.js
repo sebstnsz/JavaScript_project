@@ -1,7 +1,8 @@
 class Level {
-	constructor(inter, obs, img) {
-		this.interval = inter;
+	constructor(duree, obs, inter, img) {
+		this.duree = duree;
 		this.obstacles = obs;	// avec proba ?
+		this.interval = inter;
 
 		// écart X entre obs, vitesse Y obs, tailles
 		

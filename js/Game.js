@@ -198,7 +198,10 @@ class Game{
     }
 
     creerObstacle() {
-        var posX = Math.floor((Math.random()*(canvas.width-50)) + 50);
+        var ecartObs = 100;
+        var nbPosX = canvas.width/ecartObs;   // 5
+        var rand = Math.floor(Math.random()*nbPosX);  // 0 à 4
+        var posX = rand*100 + 40;
 
         var nbObs = this.level.obstacles.length;
         var randObs = Math.floor(Math.random()*nbObs);
