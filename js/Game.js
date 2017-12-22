@@ -24,6 +24,7 @@ class Game{
         this.creerObstacle();
         setInterval(()=> this.creerObstacle(), this.level.interval);
         //setInterval(()=> this.endLevel(), this.level.duree);
+        this.creerBonus();
 
         /*
           37 : left
@@ -94,20 +95,21 @@ class Game{
             player.shoot();
         }
 
-        if(player.arme.array_chargeur.length !== 0) {
-            for (let i = 0; i<player.arme.array_chargeur.length; i++) {
-                let bullet = player.arme.array_chargeur[i];
-                bullet.y -= player.arme.bulletspeed;
-                bullet.draw(ctx);
 
-                if (bullet.out(ctx)){
-                    player.arme.array_chargeur.splice(i, 1);
-                }
+        // dessin fusée :
+        this.player.draw(ctx);
+
+        // dessin et animation des balles :
+        for (let i = 0; i<player.arme.array_chargeur.length; i++) {
+            let bullet = player.arme.array_chargeur[i];
+            bullet.y -= player.arme.bulletspeed;
+            bullet.draw(ctx);
+            if (bullet.out(ctx)){
+                player.arme.array_chargeur.splice(i, 1);
             }
         }
 
-        this.player.draw(ctx);
-
+        // dessin et animation des obstacles, collisions avec fusée :
         for(let i=0; i<this.obstacles.length; i++) {
             let obstacle = this.obstacles[i];
             obstacle.draw(ctx);
@@ -118,47 +120,48 @@ class Game{
                 this.obstacles.splice(i,1);
                 player.life -= obstacle.degat;
             }
-
+            // collisions avec balles :
             for(let j=0; j<player.arme.array_chargeur.length; j++) {
-                if(this.collision(obstacle,player.arme.array_chargeur[j])){
-                  obstacle.life -= player.arme.degat;
-                  if(player.arme.array_chargeur[j].out()){
-                      player.arme.array_chargeur.splice(j, 1);
-                  }else {
-                      if(obstacle.life <= 0){
-                          this.obstacles.splice(i,1);
-                          player.arme.array_chargeur.splice(j, 1);
-                      }
-                  }
+				if(this.collision(obstacle,player.arme.array_chargeur[j])){
+					obstacle.life -= player.arme.degat;
+					if(player.arme.array_chargeur[j].out()){
+						player.arme.array_chargeur.splice(j, 1);
+					}
+					else {
+						if(obstacle.life <= 0){
+							this.obstacles.splice(i,1);
+							player.arme.array_chargeur.splice(j, 1);
+						}
                     player.arme.array_chargeur.splice(j, 1);
                 }
             }
         }
 
-        if(this.bonus.length > 0) {
-            for(let k=0; k<this.bonus.length; k++) {
-                let bns = this.bonus[k];
-                bns.draw(ctx);
-                bns.animer();
-                if(bns.out(ctx))
-                    this.bonus.splice(k,1);
-                else if(this.collision(player, bonus)) {
-                    this.bonus.splice(k,1);
-                    // gain bonus
-                    console.log("bonus !");
-                }
+        // dessin et animation des bonus :
+        for(let k=0; k<this.bonus.length; k++) {
+            let bns = this.bonus[k];
+            bns.draw(ctx);
+            bns.animer();
+            if(bns.out(ctx))
+                this.bonus.splice(k,1);
+            else if(this.collision(player, bonus)) {
+                this.bonus.splice(k,1);
+                // gain bonus
+                console.log("bonus !");
             }
         }
-
-
+        
+        // affichage des stats :
         player.arme.drawStat(ctx);
         this.displayScore();
         this.displayLife();
         this.displayNiveau();
 
+        // fin de la partie :
         if(player.life <= 0) {
             this.gameOver();
-        }else{
+        }
+        else{
             requestAnimationFrame(()=> this.animation());
         }
     }
@@ -214,7 +217,6 @@ class Game{
         var nbObs = this.level.obstacles.length;
         var randObs = Math.floor(Math.random()*nbObs);
         var newObs;
-
         switch(this.level.obstacles[randObs]) {
             case "easy":
                 newObs = new ObstacleEasy(posX);
@@ -232,31 +234,23 @@ class Game{
     creerBonus() {
         var lvl = this.level.id;
         var dureeLvl = this.level.duree;
-        var posX = this.randomPosX();
+        var rd;
 
-        var intervalVie;
-        var intervalArme;
+        // bonus vie :
+        setTimeout(() => this.bonus.push(new BonusVie(this.randomPosX()), dureeLvl*2/3));
 
-        if(lvl==1)
-            intervalVie = dureeLvl*2/3;
-        else
-            intervalVie = dureeLvl*1/3;
-
-        setInterval(() => this.bonus.push(new BonusVie(posX), intervalVie));
-
-        /*switch(lvl) {
-            case 2:
-        }*/
-
-        // level 1 : un seul bonus vie au bout de dureeLvl*2/3
-        // sinon : 2 bonus vie à 1/3 et 2/3
-
-        // level 2-3 : bonus arme niveau 1
-
-        // level 4-5 : idem + bonus arme niveau 2
-
-
-        // setInterval(() => this.bonus.push(), );
+        if(lvl!=1) {
+        	// bonus vie :
+        	setTimeout(() => this.bonus.push(new BonusVie(this.randomPosX()), dureeLvl*1/3));
+        	// bonus arme :
+        	rd = (Math.random()*(dureeLvl/2 - 10000)) + 10000;							// [10 000 ; durée level / 2]
+        	setTimeout(() => this.bonus.push(new BonusArme(this.randomPosX()), rd));
+        }
+        if(lvl==4 || lvl==5) {
+        	// bonus arme :
+        	rd = (Math.random()*(dureeLvl/2 - 10000)) + dureeLvl/2;						// [durée level / 2 ; durée level - 10000]
+        	setTimeout(() => this.bonus.push(new BonusArme(this.randomPosX()), rd));
+        }
     }
 
     collision(obj1,obj2) {
