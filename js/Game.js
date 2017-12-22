@@ -238,19 +238,19 @@ class Game{
         var rd;
 
         // bonus vie :
-        setTimeout(() => this.bonus.push(new BonusVie(this.randomPosX()), dureeLvl*2/3));
+        setTimeout(() => this.bonus.push(new BonusVie(this.randomPosX())), dureeLvl*2/3);
 
         if(lvl!=1) {
         	// bonus vie :
-        	setTimeout(() => this.bonus.push(new BonusVie(this.randomPosX()), dureeLvl*1/3));
+        	setTimeout(() => this.bonus.push(new BonusVie(this.randomPosX())), dureeLvl*1/3);
         	// bonus arme :
         	rd = (Math.random()*(dureeLvl/2 - 10000)) + 10000;							// [10 000 ; durée level / 2]
-        	setTimeout(() => this.bonus.push(new BonusArme(this.randomPosX()), rd));
+        	setTimeout(() => this.bonus.push(new BonusArme(this.randomPosX())), rd);
         }
         if(lvl==4 || lvl==5) {
         	// bonus arme :
         	rd = (Math.random()*(dureeLvl/2 - 10000)) + dureeLvl/2;						// [durée level / 2 ; durée level - 10000]
-        	setTimeout(() => this.bonus.push(new BonusArme(this.randomPosX()), rd));
+        	setTimeout(() => this.bonus.push(new BonusArme(this.randomPosX())), rd);
         }
     }
 

@@ -1,6 +1,6 @@
 class Bonus extends Objet {
 	constructor(x,img) {
-		super(img,x,-h,1,0,2,50,50);
+		super(img,x,-50,1,0,2,50,50);
 	}
 
 	animer() { this.y += this.vitesseY; }
