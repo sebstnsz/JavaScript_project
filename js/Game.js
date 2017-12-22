@@ -133,8 +133,9 @@ class Game{
 							player.arme.array_chargeur.splice(j, 1);
 						}
                     player.arme.array_chargeur.splice(j, 1);
-                }
-            }
+                	}
+            	}
+        	}
         }
 
         // dessin et animation des bonus :
