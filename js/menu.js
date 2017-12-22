@@ -26,7 +26,6 @@ function Menu() {
 
 
     function start() {
-        console.log(menu);
         canvas = document.querySelector("#myCanvas");
         ctx = canvas.getContext("2d");
         avatar1 = new Player(document.getElementById("spaceship1"), 0, 0, 4, 8, 70, 70);
@@ -177,6 +176,7 @@ function Menu() {
         avs2.draw(ctx);
         selected_avatar.drawStatInMenu(ctx);
         selected_avatar.drawInMenu(ctx);
+       // drawScore();
 
         // 3 - on met à jour les objets à dessiner
 
@@ -213,12 +213,21 @@ function Menu() {
         let txt2 = "スペースランナー";
         ctx.font = "25px Arial";
         ctx.fillStyle = my_gradient;
-        ctx.fillText(txt2, canvas.width / 2 - ctx.measureText(txt).width / 2, canvas.height / 2 - 5);
+        ctx.fillText(txt2, canvas.width / 2 - ctx.measureText(txt2).width / 2, canvas.height / 2 - 5);
 
         ctx.restore();
 
     }
 
+   function drawScore(){
+        let txt = "550";
+        ctx.save();
+        ctx.font = "25px Bebas";
+        ctx.fillStyle = "white";
+        ctx.translate(0,-100);
+        ctx.fillText(txt, canvas.width / 2 - ctx.measureText(txt).width / 2, canvas.height / 2 - 5);
+        ctx.restore();
+    }
 
     return {
         start: start

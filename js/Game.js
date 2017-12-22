@@ -7,7 +7,7 @@ let estPress = false;
 
 class Game{
 
-    constructor(level,p,m){
+    constructor(level,p){
         this.level = level;
         this.player = p;
         this.time = new Chrono();
@@ -16,7 +16,6 @@ class Game{
     }
 
     init(){
-        console.log("play loaded");
         canvas = document.querySelector("#myCanvas");
         ctx = canvas.getContext("2d");
         player = this.player;
@@ -25,7 +24,7 @@ class Game{
         this.creerObstacle();
         setInterval(()=> this.creerObstacle(), this.level.interval);
         //setInterval(()=> this.endLevel(), this.level.duree);
-        
+
         /*
           37 : left
           38 : up
@@ -117,7 +116,7 @@ class Game{
                 this.obstacles.splice(i,1);
             else if(this.collision(player, obstacle)){
                 this.obstacles.splice(i,1);
-                player.looseLife();
+                player.life -= obstacle.degat;
             }
 
             for(let j=0; j<player.arme.array_chargeur.length; j++) {
@@ -135,6 +134,7 @@ class Game{
                 }
             }
         }
+
         if(this.bonus.length > 0) {
             for(let k=0; k<this.bonus.length; k++) {
                 let bns = this.bonus[k];
@@ -150,6 +150,7 @@ class Game{
             }
         }
 
+
         player.arme.drawStat(ctx);
         this.displayScore();
         this.displayLife();
@@ -157,7 +158,6 @@ class Game{
 
         if(player.life <= 0) {
             this.gameOver();
-            return;
         }else{
             requestAnimationFrame(()=> this.animation());
         }
@@ -183,7 +183,7 @@ class Game{
         ctx.save();
         ctx.font = "10px Calibri";
         ctx.fillStyle = "white";
-        ctx.fillText("Niveau "+ this.niveauActuel, 10,65);
+        ctx.fillText("Niveau "+ this.level.id, 10,65);
         ctx.restore();
     }
 
@@ -210,7 +210,7 @@ class Game{
     }
 
     creerObstacle() {
-        var posX = randomPosX;
+        var posX = this.randomPosX();
         var nbObs = this.level.obstacles.length;
         var randObs = Math.floor(Math.random()*nbObs);
         var newObs;
@@ -232,7 +232,7 @@ class Game{
     creerBonus() {
         var lvl = this.level.id;
         var dureeLvl = this.level.duree;
-        var posX = randomPosX;
+        var posX = this.randomPosX();
 
         var intervalVie;
         var intervalArme;
@@ -242,7 +242,7 @@ class Game{
         else
             intervalVie = dureeLvl*1/3;
 
-        setInterval(() => this.bonus.push(new BonusVie(posX), intervalVie);
+        setInterval(() => this.bonus.push(new BonusVie(posX), intervalVie));
 
         /*switch(lvl) {
             case 2:
@@ -296,18 +296,21 @@ class Game{
         ctx.shadowOffsetY = 0;
         ctx.shadowBlur = 40;
         ctx.fillStyle = my_gradient2;
-        ctx.font = "40px True lies";
+        ctx.font = "40px Bebas";
         ctx.fillText(player.score,canvas.width/2 - ctx.measureText(player.score).width/2,canvas.height/2);
 
         ctx.fillStyle = "white";
-        let texte2 = "Press 'Space'";
+        let texte2 = "Back to menu in 3 seconds";
         ctx.font = "15px Arial";
         ctx.translate(0,50);
         ctx.fillText(texte2,canvas.width/2 - ctx.measureText(texte2).width/2,canvas.height/2);
         ctx.restore();
-
-        console.log("game over");
         let menu = new Menu();
-        menu.start();
+        setTimeout(()=>menu.start(),3000);
+
+
+
+
+
     }
 }

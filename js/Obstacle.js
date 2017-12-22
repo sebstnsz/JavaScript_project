@@ -1,6 +1,7 @@
 class Obstacle extends Objet {
-	constructor(x,vx,vy,w,h,vie,img) {
+	constructor(x,vx,vy,w,h,vie,img,d) {
 		super(img,x,-h,vie,vx,vy,w,h);
+        this.degat = d;
 	}
 
 	moveX() { this.x += this.vitesseX; }
@@ -26,12 +27,13 @@ class ObstacleEasy extends Obstacle {
 		let h=30;
 		let vie=10;
 		let img;
+		let degat = 1;
 		let rand = Math.floor(Math.random()*2);
 		if(rand==0)
 			img = document.querySelector("#meteor");
 		else
 			img = document.querySelector("#satellite1");
-		super(x,vx,vy,w,h,vie,img);
+		super(x,vx,vy,w,h,vie,img,degat);
 	}
 }
 
@@ -42,8 +44,9 @@ class ObstacleMedium extends Obstacle {
 		let w=40;
 		let h=40;
 		let vie=20;
+        let degat = 2;
 		let img = document.querySelector("#satellite2");
-		super(x,vx,vy,w,h,vie,img);
+		super(x,vx,vy,w,h,vie,img,degat);
 	}
 }
 
@@ -54,7 +57,8 @@ class ObstacleHard extends Obstacle {
 		let w=50;
 		let h=50;
 		let vie=50;
+        let degat = 4;
 		let img = document.querySelector("#asteroid");
-		super(x,vx,vy,w,h,vie,img);
+		super(x,vx,vy,w,h,vie,img,degat);
 	}
 }
