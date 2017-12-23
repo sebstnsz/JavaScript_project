@@ -1,7 +1,7 @@
 class Arme{
-    constructor(x,y,d,m,c,bs,tb){
-        this.posX = x;
-        this.posY = y;
+    constructor(d,m,bs,tb){
+        this.posX = 0;
+        this.posY = 0;
 
         this.munition = m;
 
@@ -13,6 +13,11 @@ class Arme{
         this.bulletspeed= bs;
         this.taillebullet = tb;
 
+    }
+
+    setPosition(x,y){
+        this.posX = x;
+        this.posY = y;
     }
 
 

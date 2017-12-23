@@ -1,6 +1,7 @@
 class Bonus extends Objet {
-	constructor(x,img) {
-		super(img,x,-50,1,0,2,50,50);
+	constructor(id,x,img) {
+		super(img,x,-50,1,0,1.5,25,25);
+		this.id =id;
 	}
 
 	animer() { this.y += this.vitesseY; }
@@ -11,13 +12,14 @@ class Bonus extends Objet {
 class BonusVie extends Bonus {
 	constructor(x) {
 		let img = document.querySelector("#bonusvie");
-		super(x,img);
+		super(1,x,img);
 	}
 }
 
 class BonusArme extends Bonus {
 	constructor(x) {
 		let img = document.querySelector("#bonusarme");
-		super(x,img);
+		super(2,x,img);
+		this.attachedGun = new Arme(10,100,10,7.5);
 	}
 }

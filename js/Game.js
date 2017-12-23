@@ -13,6 +13,7 @@ class Game{
         this.time = new Chrono();
         this.obstacles = [];
         this.bonus = [];
+        this.lifePlayerAtBeginning = this.player.life;
     }
 
     init(){
@@ -62,35 +63,35 @@ class Game{
         this.animation();
     }
 
-    animation(){
+    animation() {
         this.time.increment();
-        player.score = this.time.sec * 100;
+        player.score += Math.floor(100/60);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         // Checks inputStates
         if (inputStates.left) {
-           if(player.x > 0)
-               player.gauche();
+            if (player.x > 0)
+                player.gauche();
         }
         if (inputStates.right) {
-            if(player.x < canvas.width-player.largeur)
-               player.droite();
+            if (player.x < canvas.width - player.largeur)
+                player.droite();
         }
-        if(inputStates.up){
-            if(player.y >10)
+        if (inputStates.up) {
+            if (player.y > 10)
                 player.haut();
         }
-        if(inputStates.down){
-            if(player.y < canvas.height-player.largeur)
+        if (inputStates.down) {
+            if (player.y < canvas.height - player.largeur)
                 player.bas();
         }
 
-        window.addEventListener('keydown', function(event) {
+        window.addEventListener('keydown', function (event) {
             if (event.keyCode === 32)
                 estPress = true;
         }, false);
 
-        if(estPress === true){
+        if (estPress === true) {
             estPress = false;
             player.shoot();
         }
@@ -100,27 +101,28 @@ class Game{
         this.player.draw(ctx);
 
         // dessin et animation des balles :
-        for (let i = 0; i<player.arme.array_chargeur.length; i++) {
+        for (let i = 0; i < player.arme.array_chargeur.length; i++) {
             let bullet = player.arme.array_chargeur[i];
             bullet.y -= player.arme.bulletspeed;
             bullet.draw(ctx);
-            if (bullet.out(ctx)){
+            if (bullet.out(ctx)) {
                 player.arme.array_chargeur.splice(i, 1);
             }
         }
 
         // dessin et animation des obstacles, collisions avec fusée :
-        for(let i=0; i<this.obstacles.length; i++) {
+        for (let i = 0; i < this.obstacles.length; i++) {
             let obstacle = this.obstacles[i];
             obstacle.draw(ctx);
             obstacle.animer();
-            if(obstacle.out(ctx))
-                this.obstacles.splice(i,1);
-            else if(this.collision(player, obstacle)){
-                this.obstacles.splice(i,1);
+            if (obstacle.out(ctx))
+                this.obstacles.splice(i, 1);
+            else if (this.collision(player, obstacle)) {
+                this.obstacles.splice(i, 1);
                 player.life -= obstacle.degat;
             }
             // collisions avec balles :
+
             for(let j=0; j<player.arme.array_chargeur.length; j++) {
 				if(this.collision(obstacle,player.arme.array_chargeur[j])){
 					obstacle.life -= player.arme.degat;
@@ -136,50 +138,70 @@ class Game{
                 	}
             	}
         	}
-        }
-
-        // dessin et animation des bonus :
-        for(let k=0; k<this.bonus.length; k++) {
-            let bns = this.bonus[k];
-            bns.draw(ctx);
-            bns.animer();
-            if(bns.out(ctx))
-                this.bonus.splice(k,1);
-            else if(this.collision(player, bonus)) {
-                this.bonus.splice(k,1);
-                // gain bonus
-                console.log("bonus !");
+            for (let j = 0; j < player.arme.array_chargeur.length; j++) {
+                if (this.collision(obstacle, player.arme.array_chargeur[j])) {
+                    obstacle.life -= player.arme.degat;
+                    if (player.arme.array_chargeur[j].out()) {
+                        player.arme.array_chargeur.splice(j, 1);
+                    }
+                    else {
+                        if (obstacle.life <= 0) {
+                            this.obstacles.splice(i, 1);
+                            player.arme.array_chargeur.splice(j, 1);
+                        }
+                        player.arme.array_chargeur.splice(j, 1);
+                    }
+                }
             }
         }
-        
-        // affichage des stats :
-        player.arme.drawStat(ctx);
-        this.displayScore();
-        this.displayLife();
-        this.displayNiveau();
 
-        // fin de la partie :
-        if(player.life <= 0) {
-            this.gameOver();
+            // dessin et animation des bonus :
+            for (let k = 0; k < this.bonus.length; k++) {
+                let bns = this.bonus[k];
+                bns.animer();
+                bns.draw(ctx);
+                if (bns.out(ctx))
+                    this.bonus.splice(k, 1);
+                else if (this.collision(player, bns)) {
+                    this.bonus.splice(k, 1);
+                    // gain bonus
+                    if(bns.constructor.name === "BonusVie"){
+                        if(this.lifePlayerAtBeginning !== player.life){
+                            player.life++;
+                        }
+                    }else if(bns.constructor.name === "BonusArme"){
+                        player.arme.setPosition(player.x,player.y);
+                        player.arme = bns.attachedGun;
+                        console.log("arme !!");
+
+                    }
+                }
+            }
+
+            // affichage des stats :
+            player.arme.drawStat(ctx);
+            this.displayScore();
+            this.displayLife();
+            this.displayNiveau();
+            //Fin du niveau
+
+            if(this.endLevel(ctx) === false){
+
+                // fin de la partie :
+                if (player.life <= 0) {
+                    this.gameOver();
+                }
+                else {
+                    requestAnimationFrame(() => this.animation());
+                }
+            }
         }
-        else{
-            requestAnimationFrame(()=> this.animation());
-        }
-    }
 
     displayScore(){
         ctx.save();
         ctx.font = "20px Calibri";
         ctx.fillStyle = "white";
         ctx.fillText(player.score, 10,50);
-        ctx.restore();
-    }
-
-    displayTime(){
-        ctx.save();
-        ctx.font = "20px Calibri";
-        ctx.fillStyle = "white";
-        ctx.fillText("" + this.time.sec, 10,50);
         ctx.restore();
     }
 
@@ -302,10 +324,36 @@ class Game{
         ctx.restore();
         let menu = new Menu();
         setTimeout(()=>menu.start(),3000);
+    }
 
 
+    endLevel(ctx){
+        if(this.time.sec === this.level.duree){
+            console.log("fin du niveau");
+            //Affichage Transition
+            ctx.save();
+            let my_gradient2 = ctx.createLinearGradient(0, 0, 400, 0);
+            my_gradient2.addColorStop(0.3, "rgb(27, 1, 145)");
+            my_gradient2.addColorStop(0.5, "rgb(216, 21, 21)");
+            my_gradient2.addColorStop(0.7, "rgb(27, 1, 145)");
 
-
-
+            let texte = "LEVEL ENDED";
+            ctx.save();
+            ctx.fillStyle = "rgba(0, 0, 0,0.6)";
+            ctx.fillRect(0,0,canvas.width,canvas.height);
+            ctx.font = "70px Bebas";
+            ctx.fillStyle = "white";
+            ctx.fillText(texte,canvas.width/2 - ctx.measureText(texte).width/2,canvas.height/2);
+            ctx.fillStyle = "white";
+            let texte2 = "Next level in 2 seconds";
+            ctx.font = "15px Arial";
+            ctx.translate(0,50);
+            ctx.fillText(texte2,canvas.width/2 - ctx.measureText(texte2).width/2,canvas.height/2);
+            ctx.restore();
+            //Passage niveau suivant
+            setTimeout(()=>new Game(levels[this.level.id++],player).init(),3000);
+            return true;
+        }
+        return false;
     }
 }

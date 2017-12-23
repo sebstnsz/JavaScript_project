@@ -2,7 +2,7 @@ class Player extends Objet{
     constructor(img,x,y,life,speed,long,larg){
        super(img,x,y,life,speed,speed,long,larg);
        this.score = 0;
-       this.arme = new Arme(x,y,10,5,10,10,7.5);
+       this.arme = new Arme(0,0,0,0);
     }
 /*
     0 = up
