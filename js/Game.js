@@ -13,10 +13,10 @@ class Game{
         this.time = new Chrono();
         this.obstacles = [];
         this.bonus = [];
-        this.lifePlayerAtBeginning = this.player.life;
     }
 
     init(){
+
         canvas = document.querySelector("#myCanvas");
         ctx = canvas.getContext("2d");
         player = this.player;
@@ -24,9 +24,8 @@ class Game{
 
         this.creerObstacle();
         setInterval(()=> this.creerObstacle(), this.level.interval);
-        //setInterval(()=> this.endLevel(), this.level.duree);
         this.creerBonus();
-
+        console.log(player);
         /*
           37 : left
           38 : up
@@ -166,13 +165,12 @@ class Game{
                     this.bonus.splice(k, 1);
                     // gain bonus
                     if(bns.constructor.name === "BonusVie"){
-                        if(this.lifePlayerAtBeginning !== player.life){
-                            player.life++;
+                        if(player.Maxlife !== player.life){
+                            player.life += 1;
                         }
                     }else if(bns.constructor.name === "BonusArme"){
                         player.arme.setPosition(player.x,player.y);
                         player.arme = bns.attachedGun;
-                        console.log("arme !!");
 
                     }
                 }
@@ -185,15 +183,20 @@ class Game{
             this.displayNiveau();
             //Fin du niveau
 
-            if(this.endLevel(ctx) === false){
-
+        if(this.winGame(ctx) === false){
+            if(this.nextLevel(ctx) === false){
                 // fin de la partie :
+
+
                 if (player.life <= 0) {
                     this.gameOver();
-                }
-                else {
+                }else{
                     requestAnimationFrame(() => this.animation());
                 }
+
+            }
+
+
             }
         }
 
@@ -327,33 +330,75 @@ class Game{
     }
 
 
-    endLevel(ctx){
+    nextLevel(ctx){
+
         if(this.time.sec === this.level.duree){
-            console.log("fin du niveau");
-            //Affichage Transition
-            ctx.save();
+                console.log("fin du niveau");
+                //Affichage Transition
+                ctx.save();
+                let my_gradient2 = ctx.createLinearGradient(0, 0, 400, 0);
+                my_gradient2.addColorStop(0.3, "rgb(27, 1, 145)");
+                my_gradient2.addColorStop(0.5, "rgb(216, 21, 21)");
+                my_gradient2.addColorStop(0.7, "rgb(27, 1, 145)");
+
+                let texte = "LEVEL ENDED";
+                ctx.save();
+                ctx.fillStyle = "rgba(0, 0, 0,0.6)";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.font = "70px Bebas";
+                ctx.fillStyle = "white";
+                ctx.fillText(texte, canvas.width / 2 - ctx.measureText(texte).width / 2, canvas.height / 2);
+                ctx.fillStyle = "white";
+                let texte2 = "Next level in 2 seconds";
+                ctx.font = "15px Arial";
+                ctx.translate(0, 50);
+                ctx.fillText(texte2, canvas.width / 2 - ctx.measureText(texte2).width / 2, canvas.height / 2);
+                ctx.restore();
+                //Passage niveau suivant
+                setTimeout(() => new Game(levels[this.level.id], player).init(), 2000);
+                return true;
+        }
+        return false;
+    }
+
+    winGame(ctx){
+        if(this.level.id === 5 && this.time.sec === this.level.duree) {
             let my_gradient2 = ctx.createLinearGradient(0, 0, 400, 0);
             my_gradient2.addColorStop(0.3, "rgb(27, 1, 145)");
             my_gradient2.addColorStop(0.5, "rgb(216, 21, 21)");
             my_gradient2.addColorStop(0.7, "rgb(27, 1, 145)");
 
-            let texte = "LEVEL ENDED";
+            let texte = "WINNER !";
             ctx.save();
             ctx.fillStyle = "rgba(0, 0, 0,0.6)";
             ctx.fillRect(0,0,canvas.width,canvas.height);
             ctx.font = "70px Bebas";
             ctx.fillStyle = "white";
+            ctx.translate(0,-50);
             ctx.fillText(texte,canvas.width/2 - ctx.measureText(texte).width/2,canvas.height/2);
+            ctx.translate(0,70);
+
+            ctx.shadowColor = "red";
+            ctx.shadowOffsetX = 0;
+            ctx.shadowOffsetY = 0;
+            ctx.shadowBlur = 40;
+            ctx.fillStyle = my_gradient2;
+            ctx.font = "40px Bebas";
+            ctx.fillText(player.score,canvas.width/2 - ctx.measureText(player.score).width/2,canvas.height/2);
+
             ctx.fillStyle = "white";
-            let texte2 = "Next level in 2 seconds";
+            let texte2 = "Back to menu in 3 seconds";
             ctx.font = "15px Arial";
             ctx.translate(0,50);
             ctx.fillText(texte2,canvas.width/2 - ctx.measureText(texte2).width/2,canvas.height/2);
             ctx.restore();
-            //Passage niveau suivant
-            setTimeout(()=>new Game(levels[this.level.id++],player).init(),3000);
+            let menu = new Menu();
+            setTimeout(()=>menu.start(),3000);
+
             return true;
         }
+
+
         return false;
     }
 }

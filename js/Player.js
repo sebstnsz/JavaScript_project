@@ -3,6 +3,7 @@ class Player extends Objet{
        super(img,x,y,life,speed,speed,long,larg);
        this.score = 0;
        this.arme = new Arme(0,0,0,0);
+       this.Maxlife = life;
     }
 /*
     0 = up

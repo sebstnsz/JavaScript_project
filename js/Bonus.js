@@ -20,6 +20,6 @@ class BonusArme extends Bonus {
 	constructor(x) {
 		let img = document.querySelector("#bonusarme");
 		super(2,x,img);
-		this.attachedGun = new Arme(10,100,10,7.5);
+		this.attachedGun = new Arme(10,10,10,7.5);
 	}
 }

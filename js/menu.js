@@ -54,7 +54,7 @@ function Menu() {
             new Level(2, 10, ["easy", "medium"], 100, 5000, 0),
             new Level(3, 10, ["easy", "medium"], 100, 2000, 0),
             new Level(4, 10, ["medium", "hard"], 100, 2000, 0),
-            new Level(5, 60, ["easy", "medium", "hard"], 100, 1000, 0)
+            new Level(5, 10, ["easy", "medium", "hard"], 100, 1000, 0)
         ];
         button1 = new PlayButton(0, 430, 1, my_gradient, "PLAY GAME", 40, 5);
 
@@ -125,7 +125,7 @@ function Menu() {
 
             if (xmouse > button1.getPosX() && xmouse < wText && ymouse > button1.getY() - button1.getHeight() && ymouse < button1.getY() + button1.getHeight() / 2) {
                 console.log("play game !!!");
-               game = new Game(levels[1],avatar_array[index_selected_avatar]);
+               game = new Game(levels[0],avatar_array[index_selected_avatar]);
                game.init();
                ctx = null;
                canvas = null;
