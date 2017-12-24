@@ -50,11 +50,11 @@ function Menu() {
         my_gradient2.addColorStop(0.75, "rgb(27, 1, 145)");
         levels = [
             // numéro, durée, obstacles, écart, intervalle, image
-            new Level(1, 10, ["easy"], 100, 5000, "fond3_2.gif"),
-            new Level(2, 10, ["easy", "medium"], 100, 5000, "fond3_2.gif"),
-            new Level(3, 10, ["easy", "medium"], 100, 2000, "fond3_2.gif"),
-            new Level(4, 10, ["medium", "hard"], 100, 2000, "fond3_2.gif"),
-            new Level(5, 10, ["easy", "medium", "hard"], 100, 1000, "fond3_2.gif")
+            new Level(1, 30, ["easy"], 100, 5000, "fond3_2.gif"),
+            new Level(2, 30, ["easy", "medium"], 100, 5000, "fond3_2.gif"),
+            new Level(3, 30, ["easy", "medium"], 100, 2000, "fond3_2.gif"),
+            new Level(4, 30, ["medium", "hard"], 100, 2000, "fond3_2.gif"),
+            new Level(5, 60, ["easy", "medium", "hard"], 100, 1000, "fond3_2.gif")
         ];
         button1 = new PlayButton(0, 430, 1, my_gradient, "PLAY GAME", 40, 5);
 
@@ -125,7 +125,9 @@ function Menu() {
 
             if (xmouse > button1.getPosX() && xmouse < wText && ymouse > button1.getY() - button1.getHeight() && ymouse < button1.getY() + button1.getHeight() / 2) {
                 console.log("play game !!!");
-               game = new Game(levels[0],avatar_array[index_selected_avatar]);
+             //  game = new Game(levels[0],avatar_array[index_selected_avatar]);
+                game = new Game(levels[document.getElementById('level').selectedIndex],avatar_array[index_selected_avatar]);
+
                game.init();
                ctx = null;
                canvas = null;
