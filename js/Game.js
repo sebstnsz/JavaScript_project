@@ -21,11 +21,10 @@ class Game{
         ctx = canvas.getContext("2d");
         player = this.player;
         player.setPosition(canvas.width/2-player.largeur/2,400);
-
+        canvas.setAttribute("style", "background-image: url(img/"+ this.level.fond +")"); // Ou plus tard image de fond du niveau
         this.creerObstacle();
         setInterval(()=> this.creerObstacle(), this.level.interval);
         this.creerBonus();
-        console.log(player);
         /*
           37 : left
           38 : up

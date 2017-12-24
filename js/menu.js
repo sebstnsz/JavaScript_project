@@ -30,7 +30,7 @@ function Menu() {
         ctx = canvas.getContext("2d");
         avatar1 = new Player(document.getElementById("spaceship1"), 0, 0, 4, 8, 70, 70);
         avatar2 = new Player(document.getElementById("spaceship2"), 0, 0, 7, 3, 70, 70);
-
+        canvas.setAttribute("style", "background-image: url(img/fond3.gif)");
         avatar_array.push(avatar1);
         avatar_array.push(avatar2);
 
@@ -50,11 +50,11 @@ function Menu() {
         my_gradient2.addColorStop(0.75, "rgb(27, 1, 145)");
         levels = [
             // numéro, durée, obstacles, écart, intervalle, image
-            new Level(1, 10, ["easy"], 100, 5000, 0),
-            new Level(2, 10, ["easy", "medium"], 100, 5000, 0),
-            new Level(3, 10, ["easy", "medium"], 100, 2000, 0),
-            new Level(4, 10, ["medium", "hard"], 100, 2000, 0),
-            new Level(5, 10, ["easy", "medium", "hard"], 100, 1000, 0)
+            new Level(1, 10, ["easy"], 100, 5000, "fond3_2.gif"),
+            new Level(2, 10, ["easy", "medium"], 100, 5000, "fond3_2.gif"),
+            new Level(3, 10, ["easy", "medium"], 100, 2000, "fond3_2.gif"),
+            new Level(4, 10, ["medium", "hard"], 100, 2000, "fond3_2.gif"),
+            new Level(5, 10, ["easy", "medium", "hard"], 100, 1000, "fond3_2.gif")
         ];
         button1 = new PlayButton(0, 430, 1, my_gradient, "PLAY GAME", 40, 5);
 
